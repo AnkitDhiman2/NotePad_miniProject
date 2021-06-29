@@ -1,6 +1,4 @@
 #include "unity.h"
-//#include <passwordUsernameFormatChecker.h>
-/* Modify these two lines according to the project */
 #include <passwordUsernameFormatChecker.h>
 #define PROJECT_NAME "TextPad"
 
@@ -9,7 +7,7 @@ void test_containSpecialCharacter(void);
 void test_containNumber(void);
 void test_containLowerCaseLetter(void);
 void test_containUpperCaseLetter(void);
-// void test_divide(void);
+void test_passwordFormatChecklist(void);
 
 /* Required by the unity test framework */
 void setUp() {}
@@ -27,7 +25,7 @@ int main()
   RUN_TEST(test_containNumber);
   RUN_TEST(test_containLowerCaseLetter);
   RUN_TEST(test_containUpperCaseLetter);
-  // RUN_TEST(test_divide);
+  RUN_TEST(test_passwordFormatChecklist);
 
   /* Close the Unity Test Framework */
   return UNITY_END();
@@ -69,32 +67,94 @@ void test_containUpperCaseLetter()
   TEST_ASSERT_EQUAL(false, containUpperCaseLetter("####$!@$!$!$#$@!#!@"));
 }
 
-// void test_add_testcase2(void)
-// {
+void test_passwordFormatChecklist(void)
+{
+  //test 1
+  passwordChecklist checklist = PasswordFormatChecklist("@nkitKumar123");
+  int expected[6] = {
+      true,
+      true,
+      true,
+      true,
+      true,
+      true};
+  int actual[6] = {
+      checklist.numberOfCharacterisEnough,
+      checklist.doesNotContainSpaces,
+      checklist.containSpecialCharacter,
+      checklist.containNumber,
+      checklist.containLowerCaseLetter,
+      checklist.containUpperCaseLetter};
+  TEST_ASSERT_EQUAL_INT8_ARRAY(expected, actual, 2);
 
-//   /* Dummy fail*/
-//   // TEST_ASSERT_EQUAL(1500, add(750, 7500));
-// }
-// void test_subtract(void)
-// {
-//   TEST_ASSERT_EQUAL(-3, subtract(0, 3));
+  //test 2
+  checklist = PasswordFormatChecklist("@nkit Kumar123");
+  int expected2[6] = {
+      true,
+      false,
+      true,
+      true,
+      true,
+      true};
+  int actual2[6] = {checklist.numberOfCharacterisEnough,
+                    checklist.doesNotContainSpaces,
+                    checklist.containSpecialCharacter,
+                    checklist.containNumber,
+                    checklist.containLowerCaseLetter,
+                    checklist.containUpperCaseLetter};
+  TEST_ASSERT_EQUAL_INT8_ARRAY(expected2, actual2, 6);
 
-//   /* Dummy fail*/
-//   // TEST_ASSERT_EQUAL(1, subtract(1000, 900));
-// }
+  // test 3
+  checklist = PasswordFormatChecklist("ank");
+  int expected3[6] = {
+      false,
+      true,
+      false,
+      false,
+      true,
+      false};
+  int actual3[6] = {
+      checklist.numberOfCharacterisEnough,
+      checklist.doesNotContainSpaces,
+      checklist.containSpecialCharacter,
+      checklist.containNumber,
+      checklist.containLowerCaseLetter,
+      checklist.containUpperCaseLetter};
+  TEST_ASSERT_EQUAL_INT8_ARRAY(expected3, actual3, 6);
 
-// void test_multiply(void)
-// {
-//   TEST_ASSERT_EQUAL(0, multiply(1, 0));
+  //test 4
+  checklist = PasswordFormatChecklist("123214341");
+  int expected4[6] = {
+      true,
+      true,
+      false,
+      true,
+      false,
+      false};
+  int actual4[6] = {
+      checklist.numberOfCharacterisEnough,
+      checklist.doesNotContainSpaces,
+      checklist.containSpecialCharacter,
+      checklist.containNumber,
+      checklist.containLowerCaseLetter,
+      checklist.containUpperCaseLetter};
+  TEST_ASSERT_EQUAL_INT8_ARRAY(expected4, actual4, 6);
 
-//   /* Dummy fail*/
-//   // TEST_ASSERT_EQUAL(2, multiply(2, 5));
-// }
-
-// void test_divide(void)
-// {
-//   TEST_ASSERT_EQUAL(0, divide(1, 0));
-
-//   /* Dummy fail*/
-//   // TEST_ASSERT_EQUAL(3, divide(2, 2));
-// }
+  //test 5
+  checklist = PasswordFormatChecklist(" ");
+  int expected5[6] = {
+      false,
+      false,
+      false,
+      false,
+      false,
+      false};
+  int actual5[6] = {
+      checklist.numberOfCharacterisEnough,
+      checklist.doesNotContainSpaces,
+      checklist.containSpecialCharacter,
+      checklist.containNumber,
+      checklist.containLowerCaseLetter,
+      checklist.containUpperCaseLetter};
+  TEST_ASSERT_EQUAL_INT8_ARRAY(expected5, actual5, 6);
+}

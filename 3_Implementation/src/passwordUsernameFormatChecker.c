@@ -64,12 +64,59 @@ bool containUpperCaseLetter(char *str)
     return flag;
 }
 
-bool *PasswordFormatChecklist(char *str)
+passwordChecklist PasswordFormatChecklist(char *str)
 {
-    bool checklist[6];
+    passwordChecklist checklist;
 
+    //Passsword length shoud be between 8 and 14
     if (strlen(str) >= 8 && strlen(str) <= 14)
-        checklist[0] = true;
+    {
+        checklist.numberOfCharacterisEnough = true;
+    }
     else
-        checklist[0] = false;
+    {
+        checklist.numberOfCharacterisEnough = false;
+    }
+
+    //Password should not contain any spaces;
+    if (strchr(str, ' ') == NULL)
+    {
+        checklist.doesNotContainSpaces = true;
+    }
+    else
+    {
+        checklist.doesNotContainSpaces = false;
+    }
+
+    //Password Should contain special Characters
+    if (containSpecialCharacter(str))
+    {
+        checklist.containSpecialCharacter = true;
+    }
+    else
+    {
+        checklist.containLowerCaseLetter = false;
+    }
+
+    //password should contain lowercaseletter
+    if (containLowerCaseLetter(str))
+    {
+        checklist.containLowerCaseLetter = true;
+    }
+    else
+    {
+        checklist.containLowerCaseLetter = false;
+    }
+
+    //password should contain uppercase letter
+    if (containUpperCaseLetter(str))
+    {
+        checklist.containUpperCaseLetter = true;
+    }
+    else
+    {
+        checklist.containUpperCaseLetter = false;
+    }
+
+    return checklist;
 }
