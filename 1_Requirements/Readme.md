@@ -1,16 +1,25 @@
 # Requirements
+
 ## Introduction
- --- TBD 
+
+--- TBD
 
 ## Research
+
 ![Description](Link to Pic)
--- Content 
+-- Content
+
 ## Cost and Features and Timeline
+
 ![Description](Link to Pic)
--- Content 
+-- Content
+
 ## Defining Our System
+
     -- TBD
+
 ## SWOT ANALYSIS
+
 ![SWOT-Sample](Link to Pic)
 
 # 4W&#39;s and 1&#39;H
@@ -36,11 +45,14 @@
 **TBD**
 
 # Detail requirements
+
 ## High Level Requirements:
---- TBD in Tabular Format 
+
+--- TBD in Tabular Format
 -- ID | Description | Status (Implemented/Future)
+-- HR_01 | Operating System (Windows 10/Linux) | Implemented
 
+## Low level Requirements:
 
-##  Low level Requirements:
---- TBD in Tabular Format 
+--- TBD in Tabular Format
 -- ID | Description | Status (Implemented/Future)
