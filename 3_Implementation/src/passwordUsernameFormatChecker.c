@@ -1,13 +1,38 @@
 #include <passwordUsernameFormatChecker.h>
 
-bool containSpecialCharacter(char *str)
+bool containSpecialCharacter(const char *str)
 {
     bool flag = false;
 
-    for (int i = 0; i < strlen(str); i++)
+    for (unsigned int index = 0; index < strlen(str); index++)
     {
         //checking each character of the string for special character.
-        if (str[i] == '!' || str[i] == '@' || str[i] == '#' || str[i] == '$' || str[i] == '%' || str[i] == '^' || str[i] == '&' || str[i] == '*' || str[i] == '(' || str[i] == ')' || str[i] == '-' || str[i] == '{' || str[i] == '}' || str[i] == '[' || str[i] == ']' || str[i] == ':' || str[i] == ';' || str[i] == '"' || str[i] == '\'' || str[i] == '<' || str[i] == '>' || str[i] == '.' || str[i] == '/' || str[i] == '?' || str[i] == '~' || str[i] == '`')
+        if (str[index] == '!' ||
+            str[index] == '@' ||
+            str[index] == '#' ||
+            str[index] == '$' ||
+            str[index] == '%' ||
+            str[index] == '^' ||
+            str[index] == '&' ||
+            str[index] == '*' ||
+            str[index] == '(' ||
+            str[index] == ')' ||
+            str[index] == '-' ||
+            str[index] == '{' ||
+            str[index] == '}' ||
+            str[index] == '[' ||
+            str[index] == ']' ||
+            str[index] == ':' ||
+            str[index] == ';' ||
+            str[index] == '"' ||
+            str[index] == '\'' ||
+            str[index] == '<' ||
+            str[index] == '>' ||
+            str[index] == '.' ||
+            str[index] == '/' ||
+            str[index] == '?' ||
+            str[index] == '~' ||
+            str[index] == '`')
         {
             flag = true;
             break;
@@ -17,14 +42,14 @@ bool containSpecialCharacter(char *str)
     return flag;
 }
 
-bool containNumber(char *str)
+bool containNumber(const char *str)
 {
 
     bool flag = false;
 
-    for (int i = 0; i < strlen(str); i++)
+    for (unsigned int index = 0; index < strlen(str); index++)
     {
-        if (isdigit(str[i]))
+        if (isdigit(str[index]))
         {
             flag = true;
             break;
@@ -34,13 +59,13 @@ bool containNumber(char *str)
     return flag;
 }
 
-bool containLowerCaseLetter(char *str)
+bool containLowerCaseLetter(const char *str)
 {
     bool flag = false;
 
-    for (int i = 0; i < strlen(str); i++)
+    for (unsigned int index = 0; index < strlen(str); index++)
     {
-        if (str[i] >= 'a' && str[i] <= 'z')
+        if (str[index] >= 'a' && str[index] <= 'z')
         {
             flag = true;
             break;
@@ -49,13 +74,13 @@ bool containLowerCaseLetter(char *str)
     return flag;
 }
 
-bool containUpperCaseLetter(char *str)
+bool containUpperCaseLetter(const char *str)
 {
     bool flag = false;
 
-    for (int i = 0; i < strlen(str); i++)
+    for (unsigned int index = 0; index < strlen(str); index++)
     {
-        if (str[i] >= 'A' && str[i] <= 'Z')
+        if (str[index] >= 'A' && str[index] <= 'Z')
         {
             flag = true;
             break;
@@ -64,12 +89,12 @@ bool containUpperCaseLetter(char *str)
     return flag;
 }
 
-passwordChecklist PasswordFormatChecklist(char *str)
+passwordChecklist PasswordFormatChecklist(const char *password)
 {
     passwordChecklist checklist;
 
     //Passsword length shoud be between 8 and 14
-    if (strlen(str) >= 8 && strlen(str) <= 14)
+    if (strlen(password) >= 8 && strlen(password) <= 14)
     {
         checklist.numberOfCharacterisEnough = true;
     }
@@ -79,7 +104,7 @@ passwordChecklist PasswordFormatChecklist(char *str)
     }
 
     //Password should not contain any spaces;
-    if (strchr(str, ' ') == NULL)
+    if (strchr(*password, ' ') == NULL)
     {
         checklist.doesNotContainSpaces = true;
     }
@@ -89,17 +114,17 @@ passwordChecklist PasswordFormatChecklist(char *str)
     }
 
     //Password Should contain special Characters
-    if (containSpecialCharacter(str))
+    if (containSpecialCharacter(password))
     {
         checklist.containSpecialCharacter = true;
     }
     else
     {
-        checklist.containLowerCaseLetter = false;
+        checklist.containSpecialCharacter = false;
     }
 
     //password should contain lowercaseletter
-    if (containLowerCaseLetter(str))
+    if (containLowerCaseLetter(password))
     {
         checklist.containLowerCaseLetter = true;
     }
@@ -109,13 +134,50 @@ passwordChecklist PasswordFormatChecklist(char *str)
     }
 
     //password should contain uppercase letter
-    if (containUpperCaseLetter(str))
+    if (containUpperCaseLetter(password))
     {
         checklist.containUpperCaseLetter = true;
     }
     else
     {
         checklist.containUpperCaseLetter = false;
+    }
+
+    return checklist;
+}
+
+usernameChecklist UserNameFormatChecklist(const char *username)
+{
+    usernameChecklist checklist;
+
+    // username length should be between 4 and 15
+    if (strlen(username) >= 4 && strlen(username) <= 15)
+    {
+        checklist.numberOfCharacterisEnough = true;
+    }
+    else
+    {
+        checklist.numberOfCharacterisEnough = false;
+    }
+
+    //username should not contain any spaces
+    if (strchr(*username, ' ') == NULL)
+    {
+        checklist.doesNotContainSpaces = true;
+    }
+    else
+    {
+        checklist.doesNotContainSpaces = false;
+    }
+
+    // username should not contain any special characters
+    if (containSpecialCharacter(username))
+    {
+        checklist.containSpecialCharacter = false;
+    }
+    else
+    {
+        checklist.containSpecialCharacter = true;
     }
 
     return checklist;
