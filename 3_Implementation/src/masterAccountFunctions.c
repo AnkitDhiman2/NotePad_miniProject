@@ -23,9 +23,9 @@ bool masterUserAccountExist()
     return false;
 }
 
-int createMasterUserAccount(const char *username, const char *password)
+status createMasterUserAccount(const char *username, const char *password)
 {
-    int return_value = 0;
+    status return_value;
     FILE *outfile;
     masterAccount account;
     outfile = fopen(UserFile, "w");
@@ -43,13 +43,28 @@ int createMasterUserAccount(const char *username, const char *password)
     if (fwrite != 0)
     {
         printf("Account created Succefully !\n");
+        return_value = SUCCESS;
     }
     else
     {
         printf("error writing file !\n");
-        return_value = 1;
+        return_value = FAILURE;
     }
 
     fclose(outfile);
     return return_value;
+}
+
+status deleteMasterUserAccount()
+{
+    if (masterUserAccountExist)
+    {
+        remove(UserFile);
+        return SUCCESS;
+    }
+    return FAILURE;
+}
+
+bool verifyMasterUserAccount(const char *username, const char *password)
+{
 }

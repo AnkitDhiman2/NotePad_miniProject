@@ -21,29 +21,36 @@
 
 #include "passwordUsernameFormatChecker.h"
 
+typedef enum
+{
+    SUCCESS = 1,
+    FAILURE = 0
+
+} status;
+
 /**
 *  create a new Mater User Account
 * @return  0 if Master User Account created successfully
 */
-int createMasterUserAccount();
+status createMasterUserAccount();
 
 /**
 *  create a new Mater User Account
 * @return  0 if Master User Account deleted successfully
 */
-int deleteMasterUserAccount();
+status deleteMasterUserAccount();
 
 /**
 *  To change Master user name
 * @return  0 if Master Username changed successfully
 */
-int modifyMasterUsername();
+status modifyMasterUsername();
 
 /**
 *  To change Master user name
 * @return  0 if Master Password changed successfully
 */
-int modifyMasterPassword();
+status modifyMasterPassword();
 
 /**
 *  match enterd password and username with existing master user credentials

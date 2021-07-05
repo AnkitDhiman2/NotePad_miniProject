@@ -143,6 +143,15 @@ passwordChecklist PasswordFormatChecklist(const char *password)
         checklist.containUpperCaseLetter = false;
     }
 
+    if (containNumber(password))
+    {
+        checklist.containNumber = true;
+    }
+    else
+    {
+        checklist.containNumber = false;
+    }
+
     return checklist;
 }
 
