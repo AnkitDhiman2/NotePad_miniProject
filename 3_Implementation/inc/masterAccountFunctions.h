@@ -7,6 +7,8 @@
 #ifndef __MASTER_ACCOUNT_FUNCTIONS_H__
 #define __MASTER_ACCOUNT_FUNCTIONS_H__
 
+#define UserFile "MasterUserData.dat"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdio_ext.h>
@@ -15,7 +17,9 @@
 #include <openssl/evp.h>
 #include <openssl/sha.h>
 #include <sys/stat.h>
-#include <passwordUsernameFormatChecker.h>
+#include <unistd.h>
+
+#include "passwordUsernameFormatChecker.h"
 
 /**
 *  create a new Mater User Account
@@ -50,8 +54,8 @@ int modifyMasterPassword();
 bool verifyMasterUserAccount(const char *username, const char *password);
 
 /**
-*  check if master user account exist
-* @return  true if master account exist
+*  check if master user account exist.
+* @return  true if master account exist. 
 */
 bool masterUserAccountExist();
 

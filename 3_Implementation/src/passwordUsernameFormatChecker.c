@@ -1,4 +1,4 @@
-#include <passwordUsernameFormatChecker.h>
+#include "passwordUsernameFormatChecker.h"
 
 bool containSpecialCharacter(const char *str)
 {
@@ -104,7 +104,7 @@ passwordChecklist PasswordFormatChecklist(const char *password)
     }
 
     //Password should not contain any spaces;
-    if (strchr(*password, ' ') == NULL)
+    if (strchr(password, ' ') == NULL)
     {
         checklist.doesNotContainSpaces = true;
     }
@@ -161,7 +161,7 @@ usernameChecklist UserNameFormatChecklist(const char *username)
     }
 
     //username should not contain any spaces
-    if (strchr(*username, ' ') == NULL)
+    if (strchr(username, ' ') == NULL)
     {
         checklist.doesNotContainSpaces = true;
     }

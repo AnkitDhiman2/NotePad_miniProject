@@ -6,11 +6,13 @@ BUILD = build
 
 # All source code files
 SRC = project_main.c\
-src/passwordUsernameFormatChecker.c
+src/passwordUsernameFormatChecker.c\
+src/masterAccountFunctions.c
 
 # All test source files
 TEST_SRC = src/passwordUsernameFormatChecker.c\
-test/testPasswordUsernameFormatChecker.c\
+src/masterAccountFunctions.c\
+test/testTextPadFunctions.c\
 unity/unity.c\
 
 TEST_OUTPUT = $(BUILD)/Test_$(PROJECT_NAME).out
@@ -22,7 +24,7 @@ INC	= -Iinc\
 #Library Inlcudes
 #if working with CUnit 
 #INCLUDE_LIBS = -lcunit
-INCLUDE_LIBS =
+INCLUDE_LIBS = -lssl -lcrypto
 
 # Project Output name
 PROJECT_OUTPUT = $(BUILD)/$(PROJECT_NAME).out
@@ -37,7 +39,7 @@ $(PROJECT_NAME):all
 .PHONY: run clean test doc all
 
 all: $(SRC) $(BUILD)
-	gcc $(SRC) $(INC) -o $(PROJECT_OUTPUT).out
+	gcc $(SRC) $(INC) $(INCLUDE_LIBS) -o $(PROJECT_OUTPUT).out
 
 # Call `make run` to run the application
 run:$(PROJECT_NAME)
@@ -49,7 +51,7 @@ run:$(PROJECT_NAME)
 
 # Build and run the unit tests
 test:$(BUILD)
-	gcc $(TEST_SRC) $(INC) -o $(TEST_OUTPUT)
+	gcc $(TEST_SRC) $(INC) $(INCLUDE_LIBS) -o $(TEST_OUTPUT)
 	./$(TEST_OUTPUT)
 #Coverage
 coverageCheck:$(BUILD)
