@@ -18,7 +18,11 @@ void test_passwordFormatChecklist(void);
  * Filename -> masterAccountFunctions.c
 */
 void test_userAccountExist(void);
-
+void test_createMasteUserAccount(void);
+void test_verifyMasterUserAccount(void);
+void test_deleteMasterUserAccount(void);
+void test_modifyMasterUsername(void);
+void test_modifyMasterPassword(void);
 /* Required by the unity test framework */
 void setUp()
 {
@@ -47,7 +51,11 @@ int main()
  * Filename -> masterAccountFunctions.c
 */
   RUN_TEST(test_userAccountExist);
-
+  RUN_TEST(test_createMasteUserAccount);
+  RUN_TEST(test_verifyMasterUserAccount);
+  RUN_TEST(test_deleteMasterUserAccount);
+  RUN_TEST(test_modifyMasterUsername);
+  RUN_TEST(test_modifyMasterPassword);
   /* Close the Unity Test Framework */
   return UNITY_END();
 }
@@ -193,5 +201,53 @@ void test_passwordFormatChecklist(void)
 */
 void test_userAccountExist(void)
 {
+  deleteMasterUserAccount();
   TEST_ASSERT_EQUAL(false, masterUserAccountExist());
+
+  createMasterUserAccount("AnkitKumar", "Ankit123");
+  TEST_ASSERT_EQUAL(true, masterUserAccountExist());
+}
+
+void test_createMasteUserAccount(void)
+{
+  TEST_ASSERT_EQUAL(SUCCESS, createMasterUserAccount("AnkitKumar", "Ankit123"));
+}
+
+void test_verifyMasterUserAccount(void)
+{
+  createMasterUserAccount("AnkitKumar", "Ankit123");
+  TEST_ASSERT_EQUAL(true, verifyMasterUserAccount("AnkitKumar", "Ankit123"));
+  TEST_ASSERT_EQUAL(false, verifyMasterUserAccount("AnshulKumar", "Ankit12334"));
+  TEST_ASSERT_EQUAL(false, verifyMasterUserAccount("AnkitKumar", "Ankit123232312"));
+  TEST_ASSERT_EQUAL(false, verifyMasterUserAccount("AnkitKumar2323", "Ankit123"));
+}
+
+void test_deleteMasterUserAccount(void)
+{
+  createMasterUserAccount("AnkitKumar", "Ankit123");
+  TEST_ASSERT_EQUAL(SUCCESS, deleteMasterUserAccount());
+
+  TEST_ASSERT_EQUAL(FAILURE, deleteMasterUserAccount());
+}
+
+void test_modifyMasterPassword(void)
+{
+  createMasterUserAccount("old_username", "old_password");
+
+  TEST_ASSERT_EQUAL(SUCCESS, modifyMasterPassword("new_password"));
+
+  TEST_ASSERT_EQUAL(false, verifyMasterUserAccount("old_username", "old_password"));
+
+  TEST_ASSERT_EQUAL(true, verifyMasterUserAccount("old_username", "new_password"));
+}
+
+void test_modifyMasterUsername(void)
+{
+  createMasterUserAccount("old_username", "old_password");
+
+  TEST_ASSERT_EQUAL(SUCCESS, modifyMasterUsername("new_username"));
+
+  TEST_ASSERT_EQUAL(false, verifyMasterUserAccount("old_username", "old_password"));
+
+  TEST_ASSERT_EQUAL(true, verifyMasterUserAccount("new_username", "old_password"));
 }

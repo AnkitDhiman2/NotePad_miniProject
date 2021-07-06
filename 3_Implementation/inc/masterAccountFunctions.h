@@ -1,4 +1,5 @@
 /** 
+ * @author Ankit Kumar
 * @file masterAccountFunctions.h
 * Functions related to master useraccount
 *
@@ -20,6 +21,7 @@
 #include <unistd.h>
 
 #include "passwordUsernameFormatChecker.h"
+#include "credentialFunctions.h"
 
 typedef enum
 {
@@ -42,15 +44,17 @@ status deleteMasterUserAccount();
 
 /**
 *  To change Master user name
+* @param[in] new_username_string
 * @return  0 if Master Username changed successfully
 */
-status modifyMasterUsername();
+status modifyMasterUsername(const char *new_username);
 
 /**
-*  To change Master user name
+*  To change Master password
+* @param[in] new_password_string
 * @return  0 if Master Password changed successfully
 */
-status modifyMasterPassword();
+status modifyMasterPassword(const char *new_password);
 
 /**
 *  match enterd password and username with existing master user credentials
