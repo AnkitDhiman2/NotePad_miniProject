@@ -24,8 +24,9 @@
 
 typedef enum
 {
-    SUCCESS = 1,
-    FAILURE = 0
+    SUCCESS,
+    FAILURE,
+    NULL_PTR
 
 } status;
 

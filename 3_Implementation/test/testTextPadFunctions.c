@@ -204,13 +204,16 @@ void test_userAccountExist(void)
   deleteMasterUserAccount();
   TEST_ASSERT_EQUAL(false, masterUserAccountExist());
 
-  createMasterUserAccount("AnkitKumar", "Ankit123");
+  char username[14] = "AnkitKumar", password[14] = "Ankit123";
+  createMasterUserAccount(&username, &password);
   TEST_ASSERT_EQUAL(true, masterUserAccountExist());
 }
 
 void test_createMasteUserAccount(void)
 {
-  TEST_ASSERT_EQUAL(SUCCESS, createMasterUserAccount("AnkitKumar", "Ankit123"));
+  char username[14] = "AnkitKumar", password[14] = "Ankit123";
+  TEST_ASSERT_EQUAL(SUCCESS, createMasterUserAccount(&username, &password));
+  TEST_ASSERT_EQUAL(NULL_PTR, createMasterUserAccount(NULL, NULL));
 }
 
 void test_verifyMasterUserAccount(void)
@@ -220,11 +223,18 @@ void test_verifyMasterUserAccount(void)
   TEST_ASSERT_EQUAL(false, verifyMasterUserAccount("AnshulKumar", "Ankit12334"));
   TEST_ASSERT_EQUAL(false, verifyMasterUserAccount("AnkitKumar", "Ankit123232312"));
   TEST_ASSERT_EQUAL(false, verifyMasterUserAccount("AnkitKumar2323", "Ankit123"));
+
+  createMasterUserAccount("RandomUSERNMAE@#@$!@#", "RandomPassword@#$#@");
+
+  TEST_ASSERT_EQUAL(true, verifyMasterUserAccount("RandomUSERNMAE@#@$!@#", "RandomPassword@#$#@"));
+  TEST_ASSERT_EQUAL(false, verifyMasterUserAccount("AnshulKumar", "Ankit12334"));
+  TEST_ASSERT_EQUAL(false, verifyMasterUserAccount("AnkitKumar", "Ankit123232312"));
+  TEST_ASSERT_EQUAL(false, verifyMasterUserAccount("AnkitKumar2323", "Ankit123"));
 }
 
 void test_deleteMasterUserAccount(void)
 {
-  createMasterUserAccount("AnkitKumar", "Ankit123");
+  createMasterUserAccount("Ankit123", "Ankit123");
   TEST_ASSERT_EQUAL(SUCCESS, deleteMasterUserAccount());
 
   TEST_ASSERT_EQUAL(FAILURE, deleteMasterUserAccount());
