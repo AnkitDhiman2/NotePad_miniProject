@@ -7,12 +7,14 @@ BUILD = build
 # All source code files
 SRC = project_main.c\
 src/passwordUsernameFormatChecker.c\
-src/masterAccountFunctions.c
+src/masterAccountFunctions.c\
+src/sha256.c\
 
 # All test source files
 TEST_SRC = src/passwordUsernameFormatChecker.c\
 src/masterAccountFunctions.c\
 test/testTextPadFunctions.c\
+src/sha256.c\
 unity/unity.c\
 
 TEST_OUTPUT = $(BUILD)/Test_$(PROJECT_NAME).out
@@ -24,7 +26,7 @@ INC	= -Iinc\
 #Library Inlcudes
 #if working with CUnit 
 #INCLUDE_LIBS = -lcunit
-INCLUDE_LIBS = -lssl -lcrypto
+#INCLUDE_LIBS =
 
 # Project Output name
 PROJECT_OUTPUT = $(BUILD)/$(PROJECT_NAME).out

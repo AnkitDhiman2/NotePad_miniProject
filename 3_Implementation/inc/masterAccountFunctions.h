@@ -12,16 +12,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdio_ext.h>
+//#include <stdio_ext.h>
 #include <stdbool.h>
 #include <string.h>
-#include <openssl/evp.h>
-#include <openssl/sha.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
 #include "passwordUsernameFormatChecker.h"
 #include "credentialFunctions.h"
+#include "sha256.h"
 
 typedef enum
 {

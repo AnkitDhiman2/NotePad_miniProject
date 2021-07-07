@@ -1,5 +1,5 @@
 
-#include "masterAccountFuntions.h"
+#include "masterAccountFunctions.h"
 
 int main()
 {
