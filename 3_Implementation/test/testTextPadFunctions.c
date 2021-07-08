@@ -119,13 +119,13 @@ void test_passwordFormatCheck(void)
 
 void test_usernameFormatCheck()
 {
-  TEST_ASSERT_EQUAL(true, "ankit123");
-  TEST_ASSERT_EQUAL(false, passwordFormatCheck("@nkitKumar123"));
-  TEST_ASSERT_EQUAL(false, passwordFormatCheck("nk"));
-  TEST_ASSERT_EQUAL(false, passwordFormatCheck("asdfasdfsdafasdfasdfaf"));
-  TEST_ASSERT_EQUAL(false, passwordFormatCheck("@nkitKumar"));
-  TEST_ASSERT_EQUAL(false, passwordFormatCheck("ankit$umar123"));
-  TEST_ASSERT_EQUAL(false, passwordFormatCheck("@NKITKUMAR123"));
+  TEST_ASSERT_EQUAL(true, usernameFormatCheck("ankit123"));
+  TEST_ASSERT_EQUAL(false, usernameFormatCheck("@nkitKumar123"));
+  TEST_ASSERT_EQUAL(false, usernameFormatCheck("nk"));
+  TEST_ASSERT_EQUAL(false, usernameFormatCheck("asdfasdfsdafasdfasdfaf"));
+  TEST_ASSERT_EQUAL(false, usernameFormatCheck("@nkitKumar"));
+  TEST_ASSERT_EQUAL(false, usernameFormatCheck("ankit$umar123"));
+  TEST_ASSERT_EQUAL(false, usernameFormatCheck("@NKITKUMAR123"));
 }
 
 /********************************

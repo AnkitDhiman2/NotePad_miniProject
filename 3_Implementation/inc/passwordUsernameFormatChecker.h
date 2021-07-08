@@ -57,7 +57,7 @@ bool containUpperCaseLetter(const char *str);
 * @param[in] string password 
 * @return  true if password format is correct
 */
-bool PasswordFormatCheck(const char *str);
+bool passwordFormatCheck(const char *str);
 
 /**
 * @brief Username format checklist basically checks if the password is valid or not based on password policies mention below: 
@@ -67,6 +67,6 @@ bool PasswordFormatCheck(const char *str);
 * @param[in] string username
 * @return  true if username format is correct
 */
-bool UserNameFormatCheck(const char *str);
+bool usernameFormatCheck(const char *str);
 
 #endif /* #define __CALCULATOR_OPERATIONS_H__ */
