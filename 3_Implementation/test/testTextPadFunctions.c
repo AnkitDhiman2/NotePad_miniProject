@@ -12,7 +12,8 @@ void test_containSpecialCharacter(void);
 void test_containNumber(void);
 void test_containLowerCaseLetter(void);
 void test_containUpperCaseLetter(void);
-void test_passwordFormatChecklist(void);
+void test_passwordFormatCheck(void);
+void test_usernameFormatCheck(void);
 
 /********************************
  * Filename -> masterAccountFunctions.c
@@ -45,7 +46,8 @@ int main()
   RUN_TEST(test_containNumber);
   RUN_TEST(test_containLowerCaseLetter);
   RUN_TEST(test_containUpperCaseLetter);
-  RUN_TEST(test_passwordFormatChecklist);
+  RUN_TEST(test_passwordFormatCheck);
+  RUN_TEST(test_usernameFormatCheck);
 
   /********************************
  * Filename -> masterAccountFunctions.c
@@ -73,6 +75,7 @@ void test_containSpecialCharacter(void)
   TEST_ASSERT_EQUAL(false, containSpecialCharacter("ankitkumar"));
   TEST_ASSERT_EQUAL(false, containSpecialCharacter("ankitkumars d"));
   TEST_ASSERT_EQUAL(true, containUpperCaseLetter("####$!@$!$!FSD$#$@!#!@"));
+  TEST_ASSERT_EQUAL(false, containSpecialCharacter("asdfsad"));
 }
 
 void test_containNumber(void)
@@ -104,96 +107,25 @@ void test_containUpperCaseLetter()
   TEST_ASSERT_EQUAL(true, containUpperCaseLetter("####$!@$!$!FSD$#$@!#!@"));
 }
 
-void test_passwordFormatChecklist(void)
+void test_passwordFormatCheck(void)
 {
-  //test 1
-  passwordChecklist checklist = PasswordFormatChecklist("@nkitKumar123");
-  int expected[6] = {
-      true,
-      true,
-      true,
-      true,
-      true,
-      true};
-  int actual[6] = {
-      checklist.numberOfCharacterisEnough,
-      checklist.doesNotContainSpaces,
-      checklist.containSpecialCharacter,
-      checklist.containNumber,
-      checklist.containLowerCaseLetter,
-      checklist.containUpperCaseLetter};
-  TEST_ASSERT_EQUAL_INT8_ARRAY(expected, actual, 2);
+  TEST_ASSERT_EQUAL(true, passwordFormatCheck("@nkitKumar123"));
+  TEST_ASSERT_EQUAL(false, passwordFormatCheck("nk"));
+  TEST_ASSERT_EQUAL(false, passwordFormatCheck("asdfasdfsdafasdfasdfaf"));
+  TEST_ASSERT_EQUAL(false, passwordFormatCheck("@nkitKumar"));
+  TEST_ASSERT_EQUAL(false, passwordFormatCheck("ankit$umar123"));
+  TEST_ASSERT_EQUAL(false, passwordFormatCheck("@NKITKUMAR123"));
+}
 
-  //test 2
-  checklist = PasswordFormatChecklist("@nkit Kumar123");
-  int expected2[6] = {
-      true,
-      false,
-      true,
-      true,
-      true,
-      true};
-  int actual2[6] = {checklist.numberOfCharacterisEnough,
-                    checklist.doesNotContainSpaces,
-                    checklist.containSpecialCharacter,
-                    checklist.containNumber,
-                    checklist.containLowerCaseLetter,
-                    checklist.containUpperCaseLetter};
-  TEST_ASSERT_EQUAL_INT8_ARRAY(expected2, actual2, 6);
-
-  // test 3
-  checklist = PasswordFormatChecklist("ank");
-  int expected3[6] = {
-      false,
-      true,
-      false,
-      false,
-      true,
-      false};
-  int actual3[6] = {
-      checklist.numberOfCharacterisEnough,
-      checklist.doesNotContainSpaces,
-      checklist.containSpecialCharacter,
-      checklist.containNumber,
-      checklist.containLowerCaseLetter,
-      checklist.containUpperCaseLetter};
-  TEST_ASSERT_EQUAL_INT8_ARRAY(expected3, actual3, 6);
-
-  //test 4
-  checklist = PasswordFormatChecklist("123214341");
-  int expected4[6] = {
-      true,
-      true,
-      false,
-      true,
-      false,
-      false};
-  int actual4[6] = {
-      checklist.numberOfCharacterisEnough,
-      checklist.doesNotContainSpaces,
-      checklist.containSpecialCharacter,
-      checklist.containNumber,
-      checklist.containLowerCaseLetter,
-      checklist.containUpperCaseLetter};
-  TEST_ASSERT_EQUAL_INT8_ARRAY(expected4, actual4, 6);
-
-  //test 5
-  checklist = PasswordFormatChecklist(" ");
-  int expected5[6] = {
-      false,
-      false,
-      false,
-      false,
-      false,
-      false};
-  int actual5[6] = {
-      checklist.numberOfCharacterisEnough,
-      checklist.doesNotContainSpaces,
-      checklist.containSpecialCharacter,
-      checklist.containNumber,
-      checklist.containLowerCaseLetter,
-      checklist.containUpperCaseLetter};
-  TEST_ASSERT_EQUAL_INT8_ARRAY(expected5, actual5, 6);
+void test_usernameFormatCheck()
+{
+  TEST_ASSERT_EQUAL(true, "ankit123");
+  TEST_ASSERT_EQUAL(false, passwordFormatCheck("@nkitKumar123"));
+  TEST_ASSERT_EQUAL(false, passwordFormatCheck("nk"));
+  TEST_ASSERT_EQUAL(false, passwordFormatCheck("asdfasdfsdafasdfasdfaf"));
+  TEST_ASSERT_EQUAL(false, passwordFormatCheck("@nkitKumar"));
+  TEST_ASSERT_EQUAL(false, passwordFormatCheck("ankit$umar123"));
+  TEST_ASSERT_EQUAL(false, passwordFormatCheck("@NKITKUMAR123"));
 }
 
 /********************************

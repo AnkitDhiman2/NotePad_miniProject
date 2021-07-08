@@ -31,6 +31,8 @@ INC	= -Iinc\
 # Project Output name
 PROJECT_OUTPUT = $(BUILD)/$(PROJECT_NAME).out
 
+DEBUG_OUTPUT = $(BUILD)/Debug_$(PROJECT_NAME).out
+
 # Document files
 DOCUMENTATION_OUTPUT = documentation/html
 
@@ -42,6 +44,10 @@ $(PROJECT_NAME):all
 
 all: $(SRC) $(BUILD)
 	gcc $(SRC) $(INC) $(INCLUDE_LIBS) -o $(PROJECT_OUTPUT).out
+
+
+debug: $(SRC) $(BUILD)
+	gcc -g $(SRC) $(INC) $(INCLUDE_LIBS) -o $(DEBUG_OUTPUT).out
 
 # Call `make run` to run the application
 run:$(PROJECT_NAME)

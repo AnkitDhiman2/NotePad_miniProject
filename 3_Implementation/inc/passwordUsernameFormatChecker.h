@@ -16,22 +16,6 @@
 #include <string.h>
 
 /**************************** DATA TYPES ****************************/
-typedef struct
-{
-    bool numberOfCharacterisEnough;
-    bool doesNotContainSpaces;
-    bool containSpecialCharacter;
-    bool containNumber;
-    bool containUpperCaseLetter;
-    bool containLowerCaseLetter;
-} passwordChecklist;
-
-typedef struct
-{
-    bool numberOfCharacterisEnough;
-    bool doesNotContainSpaces;
-    bool containSpecialCharacter;
-} usernameChecklist;
 
 /*********************** FUNCTION DECLARATIONS **********************/
 /**
@@ -71,10 +55,9 @@ bool containUpperCaseLetter(const char *str);
 * 5) Password should contain at least one uppercase letter(A-Z).
 * 6) Password should contain at least one special character ( @, #, %, &, !, $, etc….).
 * @param[in] string password 
-* @return  a struct passwordChecklist  containing true or false according to given points
-* @note for e.g if password format is correct function will return a struct passwordChecklist {true, true, true, true, true, true} one bool value for each check
+* @return  true if password format is correct
 */
-passwordChecklist PasswordFormatChecklist(const char *str);
+bool PasswordFormatCheck(const char *str);
 
 /**
 * @brief Username format checklist basically checks if the password is valid or not based on password policies mention below: 
@@ -82,8 +65,8 @@ passwordChecklist PasswordFormatChecklist(const char *str);
 * 2) Username length should be between 4 to 15 characters.
 * 3) Username should not contain any special character ( @, #, %, &, !, $, etc….).
 * @param[in] string username
-* @return  a struct usernameChecklist containing true or false according to given points
+* @return  true if username format is correct
 */
-usernameChecklist UserNameFormatChecklist(const char *str);
+bool UserNameFormatCheck(const char *str);
 
 #endif /* #define __CALCULATOR_OPERATIONS_H__ */

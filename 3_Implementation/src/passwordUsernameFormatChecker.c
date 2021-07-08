@@ -33,8 +33,8 @@ bool containSpecialCharacter(const char *str)
             str[index] == ']' ||
             str[index] == ':' ||
             str[index] == ';' ||
+            str[index] == '\\' ||
             str[index] == '"' ||
-            str[index] == '\'' ||
             str[index] == '<' ||
             str[index] == '>' ||
             str[index] == '.' ||
@@ -98,105 +98,82 @@ bool containUpperCaseLetter(const char *str)
     return flag;
 }
 
-passwordChecklist PasswordFormatChecklist(const char *password)
+bool passwordFormatCheck(const char *password)
 {
-    passwordChecklist checklist;
+    bool IsFormatCorrect = true;
 
     //Passsword length shoud be between 8 and 14
-    if (strlen(password) >= 8 && strlen(password) <= 14)
+    if (strlen(password) < 8 && strlen(password) > 14)
     {
-        checklist.numberOfCharacterisEnough = true;
-    }
-    else
-    {
-        checklist.numberOfCharacterisEnough = false;
+        printf("-> %s\n", "Password length is not between 8-14 characters.");
+        IsFormatCorrect = false;
     }
 
     //Password should not contain any spaces;
-    if (strchr(password, ' ') == NULL)
+    if (strchr(password, ' ') != NULL)
     {
-        checklist.doesNotContainSpaces = true;
-    }
-    else
-    {
-        checklist.doesNotContainSpaces = false;
+        printf("-> %s\n", "Password contain Space character. Remove any spaces");
+        IsFormatCorrect = false;
     }
 
     //Password Should contain special Characters
-    if (containSpecialCharacter(password))
+    if (containSpecialCharacter(password) == false)
     {
-        checklist.containSpecialCharacter = true;
-    }
-    else
-    {
-        checklist.containSpecialCharacter = false;
+        printf("-> %s\n", "Password dose not contain Special Characters. Add at least one Special character");
+        IsFormatCorrect = false;
     }
 
     //password should contain lowercaseletter
-    if (containLowerCaseLetter(password))
+    if (containLowerCaseLetter(password) == false)
     {
-        checklist.containLowerCaseLetter = true;
-    }
-    else
-    {
-        checklist.containLowerCaseLetter = false;
+        printf("-> %s\n", "Password Does not contain Lower Case Letter. Add at least one Lower Case Letter");
+        IsFormatCorrect = false;
     }
 
     //password should contain uppercase letter
-    if (containUpperCaseLetter(password))
+    if (containUpperCaseLetter(password) == false)
     {
-        checklist.containUpperCaseLetter = true;
+        printf("-> %s\n", "Password Does not contain Upper Case Letter. Add at least one Upper Case Letter");
+        IsFormatCorrect = false;
+    }
+
+    //password should contain Number
+    if (containNumber(password) == false)
+    {
+        printf("-> %s\n", "Password Does not contain Number. Add at least one numeric Character");
+        IsFormatCorrect = false;
     }
     else
     {
-        checklist.containUpperCaseLetter = false;
     }
 
-    if (containNumber(password))
-    {
-        checklist.containNumber = true;
-    }
-    else
-    {
-        checklist.containNumber = false;
-    }
-
-    return checklist;
+    return IsFormatCorrect;
 }
 
-usernameChecklist UserNameFormatChecklist(const char *username)
+bool usernameFormatCheck(const char *username)
 {
-    usernameChecklist checklist;
 
+    bool IsFormatCorrect = true;
     // username length should be between 4 and 15
-    if (strlen(username) >= 4 && strlen(username) <= 15)
+    if (strlen(username) < 4 && strlen(username) > 15)
     {
-        checklist.numberOfCharacterisEnough = true;
-    }
-    else
-    {
-        checklist.numberOfCharacterisEnough = false;
+        printf("-> %s\n", "Username length is not between 4-15 characters.");
+        IsFormatCorrect = false;
     }
 
     //username should not contain any spaces
-    if (strchr(username, ' ') == NULL)
+    if (strchr(username, ' ') != NULL)
     {
-        checklist.doesNotContainSpaces = true;
-    }
-    else
-    {
-        checklist.doesNotContainSpaces = false;
+        printf("-> %s\n", "Username contain Space character");
+        IsFormatCorrect = false;
     }
 
     // username should not contain any special characters
     if (containSpecialCharacter(username))
     {
-        checklist.containSpecialCharacter = false;
-    }
-    else
-    {
-        checklist.containSpecialCharacter = true;
+        printf("-> %s\n", "Username contain Special Characters. ");
+        IsFormatCorrect = false;
     }
 
-    return checklist;
+    return IsFormatCorrect;
 }
