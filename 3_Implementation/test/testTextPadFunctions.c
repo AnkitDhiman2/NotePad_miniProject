@@ -204,15 +204,13 @@ void test_userAccountExist(void)
   deleteMasterUserAccount();
   TEST_ASSERT_EQUAL(false, masterUserAccountExist());
 
-  char username[14] = "AnkitKumar", password[14] = "Ankit123";
-  createMasterUserAccount(&username, &password);
+  createMasterUserAccount("AnkitKumar", "Ankit123");
   TEST_ASSERT_EQUAL(true, masterUserAccountExist());
 }
 
 void test_createMasteUserAccount(void)
 {
-  char username[14] = "AnkitKumar", password[14] = "Ankit123";
-  TEST_ASSERT_EQUAL(SUCCESS, createMasterUserAccount(&username, &password));
+  TEST_ASSERT_EQUAL(SUCCESS, createMasterUserAccount("AnkitKumar", "Ankit123"));
   TEST_ASSERT_EQUAL(NULL_PTR, createMasterUserAccount(NULL, NULL));
 }
 

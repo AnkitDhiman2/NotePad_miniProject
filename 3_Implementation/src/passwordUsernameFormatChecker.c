@@ -1,5 +1,14 @@
+/** 
+* @author Ankit Kumar(Ankitdkumar43@gmail.com)
+* @file passwordUsernameFormatChecker.c
+* @brief Definition of functions related to Password format checker
+*
+*/
+
+/*************************** HEADER FILES ***************************/
 #include "passwordUsernameFormatChecker.h"
 
+/*********************** FUNCTION DEFINITIONS ***********************/
 bool containSpecialCharacter(const char *str)
 {
     bool flag = false;

@@ -1,15 +1,14 @@
 /** 
- * @author Ankit Kumar
+* @author Ankit Kumar(Ankitdkumar43@gmail.com)
 * @file masterAccountFunctions.h
-* Functions related to master useraccount
+* @brief Define the API for master user account management
 *
 */
 
 #ifndef __MASTER_ACCOUNT_FUNCTIONS_H__
 #define __MASTER_ACCOUNT_FUNCTIONS_H__
 
-#define UserFile "MasterUserData.dat"
-
+/*************************** HEADER FILES ***************************/
 #include <stdio.h>
 #include <stdlib.h>
 //#include <stdio_ext.h>
@@ -17,56 +16,56 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
+#include "common.h"
 #include "passwordUsernameFormatChecker.h"
 #include "credentialFunctions.h"
 #include "sha256.h"
 
-typedef enum
-{
-    SUCCESS,
-    FAILURE,
-    NULL_PTR
+/****************************** MACROS ******************************/
+#define UserFile "MasterUserData.dat"
 
-} status;
+/*********************** FUNCTION DECLARATIONS **********************/
 
 /**
-*  create a new Mater User Account
-* @return  0 if Master User Account created successfully
+* @brief create a new Mater User Account
+* @param[in] string username
+* @param[in] string password
+* @return  SUCCESS if Master User Account created successfully
 */
-status createMasterUserAccount();
+status createMasterUserAccount(const char *username, const char *password);
 
 /**
-*  create a new Mater User Account
-* @return  0 if Master User Account deleted successfully
+* @brief create a new Mater User Account
+* @return  SUCCESS if Master User Account deleted successfully
 */
 status deleteMasterUserAccount();
 
 /**
-*  To change Master user name
-* @param[in] new_username_string
-* @return  0 if Master Username changed successfully
+* @brief To change Master user name
+* @param[in] string new_username
+* @return  SUCCESS if Master Username changed successfully
 */
 status modifyMasterUsername(const char *new_username);
 
 /**
-*  To change Master password
-* @param[in] new_password_string
-* @return  0 if Master Password changed successfully
+* @brief To change Master password
+* @param[in] string new_password
+* @return  SUCCESS if Master Password changed successfully
 */
 status modifyMasterPassword(const char *new_password);
 
 /**
-*  match enterd password and username with existing master user credentials
-* @param[in] username_string
-* @param[in] password_string
-* @return  true if credial entered are correct
+* @brief match enterd password and username with existing master user credentials
+* @param[in] string username
+* @param[in] string password
+* @return  true if credential entered are correct
 */
 bool verifyMasterUserAccount(const char *username, const char *password);
 
 /**
-*  check if master user account exist.
-* @return  true if master account exist. 
+* @brief check if master user account exist.
+* @return  true if master account exist otherwise false.
+*  
 */
 bool masterUserAccountExist();
 

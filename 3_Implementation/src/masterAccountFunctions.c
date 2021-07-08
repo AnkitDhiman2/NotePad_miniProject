@@ -1,3 +1,11 @@
+/** 
+* @author Ankit Kumar(Ankitdkumar43@gmail.com)
+* @file masterAccountFunctions.c
+* @brief Function definitions for the master account management
+*
+*/
+
+/*************************** HEADER FILES ***************************/
 #include "masterAccountFunctions.h"
 
 typedef struct
@@ -6,6 +14,8 @@ typedef struct
     unsigned char password[SHA256_BLOCK_SIZE];
 
 } masterAccount;
+
+/*********************** FUNCTION DEFINITIONS ***********************/
 
 bool masterUserAccountExist()
 {
@@ -80,14 +90,23 @@ status createMasterUserAccount(const char *username, const char *password)
 
 status deleteMasterUserAccount()
 {
+    status return_value;
     //1. Check if master Account Exist if true delete it
     if (masterUserAccountExist())
     {
         remove(UserFile);
-        return SUCCESS;
+        return_value = SUCCESS;
     }
-    // There was no UserFile to delete
-    return FAILURE;
+    else // There was no UserFile to delete
+        return_value = FAILURE;
+
+    // 2. check if credential file exist , if true delete it
+    if (access(CredentialFile, F_OK) == 0)
+    {
+        remove(CredentialFile);
+    }
+
+    return return_value;
 }
 
 bool verifyMasterUserAccount(const char *username, const char *password)
