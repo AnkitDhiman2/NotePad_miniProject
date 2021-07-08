@@ -1,15 +1,19 @@
 
+
+/*************************** HEADER FILES ***************************/
 #include "masterAccountFunctions.h"
 #include "common.h"
 #include "credentialFunctions.h"
 #include "passwordUsernameFormatChecker.h"
 
+/****************************** MACROS ******************************/
 #ifdef _WIN32
 #define CLEAR "clr"
 #else
 #define CLEAR "clear"
 #endif
 
+/*********************** MAIN FUNCTION DEFINITIONS ***********************/
 int main()
 {
     printf("%s\n", "*********************************************** TextPad Password Maneger ***********************************************");
@@ -17,7 +21,7 @@ int main()
     {
         if (masterUserAccountExist())
         {
-                }
+        }
         else // Create new Master Account
         {
             char *username; // for new username
