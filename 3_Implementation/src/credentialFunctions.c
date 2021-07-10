@@ -24,16 +24,6 @@ status addNewCredential(const char *organisationName, const char *username, cons
         strlen(password) == 0)
         return NULL_PTR;
 
-    if (credentialExist(organisationName, username))
-    {
-        printf("%s\n", "Organisation & Username combination already exist");
-        return FAILURE;
-    }
-
-    strcpy(new_credential.organisationName, organisationName);
-    strcpy(new_credential.username, username);
-    strcpy(new_credential.password, password);
-
     // Check if credential file exist or not if not create it
     if (access(CREDENTIAL_FILE, F_OK) != 0)
     {
@@ -44,6 +34,16 @@ status addNewCredential(const char *organisationName, const char *username, cons
 
         fclose(outfile);
     }
+
+    if (credentialExist(organisationName, username))
+    {
+        printf("%s\n", "Organisation & Username combination already exist");
+        return FAILURE;
+    }
+
+    strcpy(new_credential.organisationName, organisationName);
+    strcpy(new_credential.username, username);
+    strcpy(new_credential.password, password);
 
     // open CREDENTIAL_FILE to apend the credential
     outfile = fopen(CREDENTIAL_FILE, "a");
@@ -56,31 +56,21 @@ status addNewCredential(const char *organisationName, const char *username, cons
 
 status showAllCredentials()
 {
-    FILE *infile;
+    FILE *credential_file;
     credential credential;
 
     //*********open the credential file in read mode***********
-    infile = fopen(CREDENTIAL_FILE, "r");
-    if (infile == NULL)
+    credential_file = fopen(CREDENTIAL_FILE, "r");
+    if (credential_file == NULL)
     {
         printf("%s\n", "Show All Credential - Error opening file");
-        return FAILURE;
-    }
-
-    //*********Checking if file is empty***************
-    fseek(infile, 0, SEEK_END);
-    int size = ftell(infile);
-    if (0 == size)
-    {
-        printf("file is empty\n");
-        fclose(infile);
         return FAILURE;
     }
 
     //**************Reading the file until EOF and printing credentials*******************
     int i = 1;
     printf("%s\n", "********************************************************************************************");
-    while (fread(&credential, sizeof(credential), 1, infile))
+    while (fread(&credential, sizeof(credential), 1, credential_file))
     {
 
         printf("%d) Organisation = %s, Username = %s, Password = %s\n", i,
@@ -89,7 +79,7 @@ status showAllCredentials()
         printf("%s\n", "********************************************************************************************");
         i++;
     }
-    fclose(infile);
+    fclose(credential_file);
     return SUCCESS;
 }
 
@@ -104,41 +94,41 @@ status deleteAllCredentials()
     return FAILURE; // file does not exist
 }
 
-status searchCredential(const char *organisationName, const char *username)
+status searchCredential(const char *organisationName, const char *username, credential *out_credential)
 {
     credential credential;
-    FILE *infile;
+    FILE *credential_file;
 
     //********checking if there is any NULL or size 0 string in the arguments********
     if (organisationName == NULL ||
         username == NULL ||
+        out_credential == NULL ||
         strlen(organisationName) == 0 ||
         strlen(username) == 0)
         return NULL_PTR;
 
     //*********open the credential file in read mode***********
-    infile = fopen(CREDENTIAL_FILE, "r");
-    if (infile == NULL)
+    credential_file = fopen(CREDENTIAL_FILE, "r");
+    if (credential_file == NULL)
     {
         printf("%s\n", "Search Credential - Error opening file");
         return FAILURE;
     }
 
     //**************Reading the file until EOF credential is found*******************
-    while (fread(&credential, sizeof(credential), 1, infile))
+    while (fread(&credential, sizeof(credential), 1, credential_file))
     {
         if (strcmp(credential.organisationName, organisationName) == 0 &&
             strcmp(credential.username, username) == 0)
         {
-            printf(" Organisation = %s, Username = %s, Password = %s\n",
-                   credential.organisationName, credential.username, credential.password);
-
-            printf("%s\n", "********************************************************************************************");
-            fclose(infile);
+            strcpy(out_credential->organisationName, credential.organisationName);
+            strcpy(out_credential->username, credential.username);
+            strcpy(out_credential->password, credential.password);
+            fclose(credential_file);
             return SUCCESS;
         }
     }
-    fclose(infile);
+    fclose(credential_file);
     return FAILURE;
 }
 
@@ -146,7 +136,7 @@ bool credentialExist(const char *organisationName, const char *username)
 {
 
     credential credential;
-    FILE *infile;
+    FILE *credential_file;
 
     //********checking if there is any NULL or size 0 string in the arguments********
     if (organisationName == NULL ||
@@ -159,23 +149,150 @@ bool credentialExist(const char *organisationName, const char *username)
     }
 
     //*********open the credential file in read mode***********
-    infile = fopen(CREDENTIAL_FILE, "r");
-    if (infile == NULL)
+    credential_file = fopen(CREDENTIAL_FILE, "r");
+    if (credential_file == NULL)
     {
-        printf("%s\n", "Credential Search - Error opening file");
+        printf("%s\n", "credental exist - Error opening file");
         return false;
     }
 
     // **************Reading the file until EOF or credential is found*******************
-    while (fread(&credential, sizeof(credential), 1, infile))
+    while (fread(&credential, sizeof(credential), 1, credential_file))
     {
         if (strcmp(credential.organisationName, organisationName) == 0 &&
             strcmp(credential.username, username) == 0)
         {
-            fclose(infile);
+            fclose(credential_file);
             return true;
         }
     }
-    fclose(infile);
+    fclose(credential_file);
+
     return false; // NO such credential found
+}
+
+status modifyCredentialOrganisation(char *organisation, char *username, char *new_Organisation_name)
+{
+    credential temp_credential;
+    FILE *credential_file;
+
+    if (organisation == NULL ||
+        username == NULL ||
+        new_Organisation_name == NULL ||
+        strlen(organisation) == 0 ||
+        strlen(username) == 0 ||
+        strlen(new_Organisation_name) == 0)
+    {
+        return NULL_PTR;
+    }
+
+    credential_file = fopen(CREDENTIAL_FILE, "r+");
+    if (credential_file == NULL)
+    {
+
+        printf("%s\n", "error Opening file");
+        return FAILURE;
+    }
+
+    int index = 0;
+    while (fread(&temp_credential, sizeof(credential), 1, credential_file))
+    {
+        if (strcmp(temp_credential.organisationName, organisation) == 0 &&
+            strcmp(temp_credential.username, username) == 0)
+        {
+            strcpy(temp_credential.organisationName, new_Organisation_name);
+            break;
+        }
+        index++;
+    }
+
+    fseek(credential_file, index * sizeof(credential), SEEK_SET);
+    fwrite(&temp_credential, sizeof(credential), 1, credential_file);
+
+    fclose(credential_file);
+    return SUCCESS;
+}
+
+status modifyCredentialUsername(char *organisation, char *username, char *new_username)
+{
+    credential temp_credential;
+    FILE *credential_file;
+
+    if (organisation == NULL ||
+        username == NULL ||
+        new_username == NULL ||
+        strlen(organisation) == 0 ||
+        strlen(username) == 0 ||
+        strlen(new_username) == 0)
+    {
+        return NULL_PTR;
+    }
+
+    credential_file = fopen(CREDENTIAL_FILE, "r+");
+    if (credential_file == NULL)
+    {
+
+        printf("%s\n", "error Opening file");
+        return FAILURE;
+    }
+
+    int index = 0;
+    while (fread(&temp_credential, sizeof(credential), 1, credential_file))
+    {
+        if (strcmp(temp_credential.organisationName, organisation) == 0 &&
+            strcmp(temp_credential.username, username) == 0)
+        {
+            strcpy(temp_credential.username, new_username);
+            break;
+        }
+        index++;
+    }
+
+    fseek(credential_file, index * sizeof(credential), SEEK_SET);
+    fwrite(&temp_credential, sizeof(credential), 1, credential_file);
+
+    fclose(credential_file);
+    return SUCCESS;
+}
+
+status modifyCredentialPassword(char *organisation, char *username, char *new_password)
+{
+    credential temp_credential;
+    FILE *credential_file;
+
+    if (organisation == NULL ||
+        username == NULL ||
+        new_password == NULL ||
+        strlen(organisation) == 0 ||
+        strlen(username) == 0 ||
+        strlen(new_password) == 0)
+    {
+        return NULL_PTR;
+    }
+
+    credential_file = fopen(CREDENTIAL_FILE, "r+");
+    if (credential_file == NULL)
+    {
+
+        printf("%s\n", "error Opening file");
+        return NULL_PTR;
+    }
+
+    int index = 0;
+    while (fread(&temp_credential, sizeof(credential), 1, credential_file))
+    {
+        if (strcmp(temp_credential.organisationName, organisation) == 0 &&
+            strcmp(temp_credential.username, username) == 0)
+        {
+            strcpy(temp_credential.password, new_password);
+            break;
+        }
+        index++;
+    }
+
+    fseek(credential_file, index * sizeof(credential), SEEK_SET);
+    fwrite(&temp_credential, sizeof(credential), 1, credential_file);
+
+    fclose(credential_file);
+    return SUCCESS;
 }

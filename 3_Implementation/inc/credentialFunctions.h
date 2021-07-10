@@ -52,23 +52,25 @@ status deleteCredential(const char organisationName, const char *username);
 * @param[in] string new_Organisation_name
 * @return  SUCCESS if credentials arr found otherwise FAILURE
 */
-status modifyCredentialOrganisation(credential *cred, char *new_Organisation_name);
+status modifyCredentialOrganisation(char *organisation, char *username, char *new_Organisation_name);
 
 /**
 * @brief To change Username in credentials
-* @param[in] credential pointer to credential data
+* @param[in]  string organisation name
+* @param[in] string username
 * @param[in] string new_username
 * @return  SUCCESS if credentials arr found otherwise FAILURE
 */
-status modifyCredentialUsername(credential *cred, char *new_username);
+status modifyCredentialUsername(char *organisation, char *username, char *new_username);
 
 /**
 * @brief To password credentials
-* @param[in] credential pointer to credential data
+* @param[in]  string organisation name
+* @param[in] string username
 * @param[in] string new_password
 * @return  SUCCESS if credentials arr found otherwise FAILURE
 */
-status modifyCredentialPassword(credential *cred, char *new_password);
+status modifyCredentialPassword(char *organisation, char *username, char *new_password);
 
 /**
 * @brief To search credentials
@@ -76,7 +78,7 @@ status modifyCredentialPassword(credential *cred, char *new_password);
 * @param[in] string username
 * @return  SUCCESS if credentials arr found otherwise FAILURE
 */
-status searchCredential(const char *organisationName, const char *username);
+status searchCredential(const char *organisationName, const char *username, credential *out_credential);
 
 /**
 * @brief To print all saved credentials 

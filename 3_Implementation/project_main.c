@@ -5,6 +5,7 @@
 #include "common.h"
 #include "credentialFunctions.h"
 #include "passwordUsernameFormatChecker.h"
+#include "stdio.h"
 
 /****************************** MACROS ******************************/
 #ifdef _WIN32
@@ -13,9 +14,9 @@
 #define CLEAR "clear"
 #endif
 
-#define TEST
+//#define TEST
 
-#define BUFFER_SIZE 100
+#define BUFFER_SIZE (100) /*Common Buffer size for input*/
 
 #ifndef TEST
 /*********************** MAIN FUNCTION DEFINITIONS ***********************/
@@ -30,6 +31,7 @@ int main()
             {
                 char *username; // for user input
                 char *password; // for user input
+                char input;
 
                 printf("%s\n", "Enter Master Username");
                 fgets(username, BUFFER_SIZE, stdin);
@@ -41,7 +43,20 @@ int main()
                     break;
                 }
                 system(CLEAR);
-                printf("%s\n", "Master Username or Master  Password is incorrect");
+                printf("%s\n", "Master Username or Master  Password is incorrect.");
+                printf("%s\n", ">Enter 1 to try again\n>Enter 0 to exit");
+
+                fgetc(input);
+                switch (input)
+                {
+                case '0':
+                    printf("%s", "Exiting the program");
+                    return 0;
+                    break;
+                default:
+                    continue;
+                    break;
+                }
             }
         }
         else // Create new Master Account
@@ -92,18 +107,22 @@ int main()
 #else
 int main()
 {
+    credential temp_credential;
     addNewCredential("facebook", "Ankit", "ankit123");
     addNewCredential("twitter", "Ankit", "ankit123");
+    addNewCredential("facebook1", "Ankit", "ankit123");
+    addNewCredential("twitter2", "Ankit", "ankit123");
+    addNewCredential("facebook3", "Ankit", "ankit123");
+    addNewCredential("twitter4", "Ankit", "ankit123");
+    addNewCredential("facebook5", "Ankit", "ankit123");
+    addNewCredential("twitter6", "Ankit", "ankit123");
+    addNewCredential("Random Organisation", "Ankit Kumar", "@nkit123");
 
-    //showAllCredentials();
-    searchCredential("facebook", "Ankit");
-
-    if (credentialExist("twitter", "Ankit"))
-        printf("%s\n", "Exist");
-    else
-        printf("%s\n", "not Exist");
+    searchCredential("twitter", "Ankit", &temp_credential);
+    printf("%s\n", temp_credential.organisationName);
+    printf("%s\n", temp_credential.username);
+    printf("%s\n", temp_credential.password);
 
     deleteAllCredentials();
 }
-
 #endif

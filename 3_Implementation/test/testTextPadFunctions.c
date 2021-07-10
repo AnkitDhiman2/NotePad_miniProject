@@ -34,7 +34,9 @@ void test_showAllCredentials(void);
 void test_deleteAllCredentials(void);
 void test_searchCredential(void);
 void test_credentialExist(void);
-
+void test_modifyCredentialUsername(void);
+void test_modifyCredentialOrganisation(void);
+void test_modifyCredentialPassword(void);
 /* Required by the unity test framework */
 void setUp()
 {
@@ -78,7 +80,9 @@ int main()
   RUN_TEST(test_deleteAllCredentials);
   RUN_TEST(test_searchCredential);
   RUN_TEST(test_credentialExist);
-  //RUN_TEST();
+  RUN_TEST(test_modifyCredentialUsername);
+  RUN_TEST(test_modifyCredentialOrganisation);
+  RUN_TEST(test_modifyCredentialPassword);
 
   /* Close the Unity Test Framework */
   return UNITY_END();
@@ -238,10 +242,6 @@ void test_showAllCredentials(void)
 
   TEST_ASSERT_EQUAL(FAILURE, showAllCredentials());
 
-  FILE *test_file = fopen(CREDENTIAL_FILE, "w");
-  fclose(test_file);
-  TEST_ASSERT_EQUAL(FAILURE, showAllCredentials());
-
   deleteAllCredentials();
 }
 
@@ -254,29 +254,39 @@ void test_deleteAllCredentials(void)
 
 void test_searchCredential(void)
 {
+  credential temp_credential;
   addNewCredential("facebook", "Ankit", "ankit123");
   addNewCredential("twitter", "Ankit", "ankit123");
   addNewCredential("Random Organisation", "Ankit Kumar", "@nkit123");
 
-  TEST_ASSERT_EQUAL(SUCCESS, searchCredential("twitter", "Ankit"));
-  TEST_ASSERT_EQUAL(SUCCESS, searchCredential("Random Organisation", "Ankit Kumar"));
-  TEST_ASSERT_EQUAL(FAILURE, searchCredential("twitter", "Ankit Kumar"));
-  TEST_ASSERT_EQUAL(FAILURE, searchCredential("DontKnow", "Ankit Kumar"));
+  searchCredential("twitter", "Ankit", &temp_credential);
 
-  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential(NULL, "Ankit Kumar"));
-  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("", "Ankit Kumar"));
-  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("Ankit Kumar", NULL));
-  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("Ankit Kumar", ""));
+  TEST_ASSERT_EQUAL_CHAR_ARRAY("twitter", temp_credential.organisationName, strlen(temp_credential.organisationName));
+
+  TEST_ASSERT_EQUAL_CHAR_ARRAY("Ankit", temp_credential.username, strlen(temp_credential.username));
+
+  TEST_ASSERT_EQUAL_CHAR_ARRAY("ankit123", temp_credential.password, strlen(temp_credential.password));
+
+  TEST_ASSERT_EQUAL(SUCCESS, searchCredential("twitter", "Ankit", &temp_credential));
+  TEST_ASSERT_EQUAL(SUCCESS, searchCredential("Random Organisation", "Ankit Kumar", &temp_credential));
+  TEST_ASSERT_EQUAL(FAILURE, searchCredential("twitter", "Ankit Kumar", &temp_credential));
+  TEST_ASSERT_EQUAL(FAILURE, searchCredential("DontKnow", "Ankit Kumar", &temp_credential));
+
+  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential(NULL, "Ankit Kumar", &temp_credential));
+  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("", "Ankit Kumar", &temp_credential));
+  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("Ankit Kumar", NULL, &temp_credential));
+  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("Ankit Kumar", "", &temp_credential));
+  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("Ankit Kumar", "", NULL));
 
   // creeating empty file
   FILE *test_file = fopen(CREDENTIAL_FILE, "w");
   fclose(test_file);
 
-  TEST_ASSERT_EQUAL(FAILURE, searchCredential("DontKnow", "Ankit Kumar"));
+  TEST_ASSERT_EQUAL(FAILURE, searchCredential("DontKnow", "Ankit Kumar", &temp_credential));
 
   deleteAllCredentials();
 
-  TEST_ASSERT_EQUAL(FAILURE, searchCredential("DontKnow", "Ankit Kumar"));
+  TEST_ASSERT_EQUAL(FAILURE, searchCredential("DontKnow", "Ankit Kumar", &temp_credential));
 }
 
 void test_credentialExist(void)
@@ -302,4 +312,89 @@ void test_credentialExist(void)
 
   deleteAllCredentials();
   TEST_ASSERT_EQUAL(false, credentialExist("DontKnow", "Ankit Kumar"));
+}
+
+void test_modifyCredentialUsername(void)
+{
+  addNewCredential("1_facebook", "Ankit", "ankit123");
+  addNewCredential("2_twitter", "Ankit", "ankit123");
+  addNewCredential("3_facebook", "Ankit", "ankit123");
+  addNewCredential("4_twitter", "Ankit", "ankit123");
+  addNewCredential("5_facebook", "Ankit", "ankit123");
+  addNewCredential("6_twitter", "Ankit", "ankit123");
+  addNewCredential("7_facebook", "Ankit", "ankit123");
+  addNewCredential("8_facebook", "Ankit", "ankit123");
+  addNewCredential("9_twitter", "Ankit", "ankit123");
+  addNewCredential("10_facebook", "Ankit", "ankit123");
+  addNewCredential("11_twitter", "Ankit", "ankit123");
+  addNewCredential("12_facebook", "Ankit", "ankit123");
+  addNewCredential("13_twitter", "Ankit", "ankit123");
+  addNewCredential("14_facebook", "Ankit", "ankit123");
+  addNewCredential("15_twitter", "Ankit", "ankit123");
+
+  TEST_ASSERT_EQUAL(SUCCESS, modifyCredentialUsername("1_facebook", "Ankit", "New_username"));
+
+  modifyCredentialUsername("8_facebook", "Ankit", "New_username");
+
+  TEST_ASSERT_EQUAL(true, credentialExist("8_facebook", "New_username"));
+
+  TEST_ASSERT_EQUAL(false, credentialExist("8_facebook", "Ankit"));
+
+  deleteAllCredentials();
+}
+void test_modifyCredentialOrganisation(void)
+{
+  addNewCredential("1_facebook", "Ankit", "ankit123");
+  addNewCredential("2_twitter", "Ankit", "ankit123");
+  addNewCredential("3_facebook", "Ankit", "ankit123");
+  addNewCredential("4_twitter", "Ankit", "ankit123");
+  addNewCredential("5_facebook", "Ankit", "ankit123");
+  addNewCredential("6_twitter", "Ankit", "ankit123");
+  addNewCredential("7_facebook", "Ankit", "ankit123");
+  addNewCredential("8_facebook", "Ankit", "ankit123");
+  addNewCredential("9_twitter", "Ankit", "ankit123");
+  addNewCredential("10_facebook", "Ankit", "ankit123");
+  addNewCredential("11_twitter", "Ankit", "ankit123");
+  addNewCredential("12_facebook", "Ankit", "ankit123");
+  addNewCredential("13_twitter", "Ankit", "ankit123");
+  addNewCredential("14_facebook", "Ankit", "ankit123");
+  addNewCredential("15_twitter", "Ankit", "ankit123");
+
+  TEST_ASSERT_EQUAL(SUCCESS, modifyCredentialUsername("1_facebook", "Ankit", "New_username"));
+
+  modifyCredentialUsername("8_facebook", "Ankit", "New_username");
+
+  TEST_ASSERT_EQUAL(true, credentialExist("8_facebook", "New_username"));
+
+  TEST_ASSERT_EQUAL(false, credentialExist("8_facebook", "Ankit"));
+  deleteAllCredentials();
+}
+void test_modifyCredentialPassword(void)
+{
+  addNewCredential("1_facebook", "Ankit", "ankit123");
+  addNewCredential("2_twitter", "Ankit", "ankit123");
+  addNewCredential("3_facebook", "Ankit", "ankit123");
+  addNewCredential("4_twitter", "Ankit", "ankit123");
+  addNewCredential("5_facebook", "Ankit", "ankit123");
+  addNewCredential("6_twitter", "Ankit", "ankit123");
+  addNewCredential("7_facebook", "Ankit", "ankit123");
+  addNewCredential("8_facebook", "Ankit", "ankit123");
+  addNewCredential("9_twitter", "Ankit", "ankit123");
+  addNewCredential("10_facebook", "Ankit", "ankit123");
+  addNewCredential("11_twitter", "Ankit", "ankit123");
+  addNewCredential("12_facebook", "Ankit", "ankit123");
+  addNewCredential("13_twitter", "Ankit", "ankit123");
+  addNewCredential("14_facebook", "Ankit", "ankit123");
+  addNewCredential("15_twitter", "Ankit", "ankit123");
+
+  credential cred;
+
+  TEST_ASSERT_EQUAL(SUCCESS, modifyCredentialPassword("1_facebook", "Ankit", "New_Password"));
+
+  modifyCredentialPassword("8_facebook", "Ankit", "New_Password");
+  searchCredential("8_facebook", "Ankit", &cred);
+
+  TEST_ASSERT_EQUAL_CHAR_ARRAY("New_Password", cred.password, strlen(cred.password));
+
+  deleteAllCredentials();
 }
