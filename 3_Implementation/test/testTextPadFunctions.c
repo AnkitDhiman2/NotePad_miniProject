@@ -1,6 +1,7 @@
 #include "unity.h"
 #include "passwordUsernameFormatChecker.h"
 #include "masterAccountFunctions.h"
+#include "credentialFunctions.h"
 #define PROJECT_NAME "TextPad"
 
 /* Prototypes for all the test functions */
@@ -24,6 +25,16 @@ void test_verifyMasterUserAccount(void);
 void test_deleteMasterUserAccount(void);
 void test_modifyMasterUsername(void);
 void test_modifyMasterPassword(void);
+
+/********************************
+ * Filename -> credentialFunctions.c
+*/
+void test_addNewCredential(void);
+void test_showAllCredentials(void);
+void test_deleteAllCredentials(void);
+void test_searchCredential(void);
+void test_credentialExist(void);
+
 /* Required by the unity test framework */
 void setUp()
 {
@@ -58,6 +69,17 @@ int main()
   RUN_TEST(test_deleteMasterUserAccount);
   RUN_TEST(test_modifyMasterUsername);
   RUN_TEST(test_modifyMasterPassword);
+
+  /********************************
+ * Filename -> credentialFunctions.c
+*/
+  RUN_TEST(test_addNewCredential);
+  RUN_TEST(test_showAllCredentials);
+  RUN_TEST(test_deleteAllCredentials);
+  RUN_TEST(test_searchCredential);
+  RUN_TEST(test_credentialExist);
+  //RUN_TEST();
+
   /* Close the Unity Test Framework */
   return UNITY_END();
 }
@@ -190,4 +212,94 @@ void test_modifyMasterUsername(void)
   TEST_ASSERT_EQUAL(false, verifyMasterUserAccount("old_username", "old_password"));
 
   TEST_ASSERT_EQUAL(true, verifyMasterUserAccount("new_username", "old_password"));
+}
+
+/********************************
+ * Filename -> credentialFunctions.c
+*/
+
+void test_addNewCredential(void)
+{
+  TEST_ASSERT_EQUAL(SUCCESS, addNewCredential("facebook", "Ankit", "ankit123"));
+  TEST_ASSERT_EQUAL(SUCCESS, addNewCredential("twitter", "Ankit", "ankit123"));
+  TEST_ASSERT_EQUAL(FAILURE, addNewCredential("facebook", "Ankit", "ankit123"));
+  TEST_ASSERT_EQUAL(NULL_PTR, addNewCredential(NULL, "Ankit", "ankit123"));
+  TEST_ASSERT_EQUAL(NULL_PTR, addNewCredential(NULL, "", "ankit123"));
+  TEST_ASSERT_EQUAL(NULL_PTR, addNewCredential("as", "Ankit", NULL));
+
+  deleteAllCredentials();
+}
+void test_showAllCredentials(void)
+{
+  addNewCredential("facebook", "Ankit", "ankit123");
+  addNewCredential("twitter", "Ankit", "ankit123");
+  TEST_ASSERT_EQUAL(SUCCESS, showAllCredentials());
+  deleteAllCredentials();
+
+  TEST_ASSERT_EQUAL(FAILURE, showAllCredentials());
+
+  FILE *test_file = fopen(CREDENTIAL_FILE, "w");
+  fclose(test_file);
+  TEST_ASSERT_EQUAL(FAILURE, showAllCredentials());
+
+  deleteAllCredentials();
+}
+
+void test_deleteAllCredentials(void)
+{
+  addNewCredential("facebook", "Ankit", "ankit123");
+  TEST_ASSERT_EQUAL(SUCCESS, deleteAllCredentials());
+  TEST_ASSERT_EQUAL(FAILURE, deleteAllCredentials());
+}
+
+void test_searchCredential(void)
+{
+  addNewCredential("facebook", "Ankit", "ankit123");
+  addNewCredential("twitter", "Ankit", "ankit123");
+  addNewCredential("Random Organisation", "Ankit Kumar", "@nkit123");
+
+  TEST_ASSERT_EQUAL(SUCCESS, searchCredential("twitter", "Ankit"));
+  TEST_ASSERT_EQUAL(SUCCESS, searchCredential("Random Organisation", "Ankit Kumar"));
+  TEST_ASSERT_EQUAL(FAILURE, searchCredential("twitter", "Ankit Kumar"));
+  TEST_ASSERT_EQUAL(FAILURE, searchCredential("DontKnow", "Ankit Kumar"));
+
+  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential(NULL, "Ankit Kumar"));
+  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("", "Ankit Kumar"));
+  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("Ankit Kumar", NULL));
+  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("Ankit Kumar", ""));
+
+  // creeating empty file
+  FILE *test_file = fopen(CREDENTIAL_FILE, "w");
+  fclose(test_file);
+
+  TEST_ASSERT_EQUAL(FAILURE, searchCredential("DontKnow", "Ankit Kumar"));
+
+  deleteAllCredentials();
+
+  TEST_ASSERT_EQUAL(FAILURE, searchCredential("DontKnow", "Ankit Kumar"));
+}
+
+void test_credentialExist(void)
+{
+  addNewCredential("twitter", "Ankit", "ankit123");
+  addNewCredential("Random Organisation", "Ankit Kumar", "@nkit123");
+
+  TEST_ASSERT_EQUAL(true, credentialExist("twitter", "Ankit"));
+  TEST_ASSERT_EQUAL(true, credentialExist("Random Organisation", "Ankit Kumar"));
+  TEST_ASSERT_EQUAL(false, credentialExist("twitter", "Ankit Kumar"));
+  TEST_ASSERT_EQUAL(false, credentialExist("DontKnow", "Ankit Kumar"));
+
+  TEST_ASSERT_EQUAL(false, credentialExist(NULL, "Ankit Kumar"));
+  TEST_ASSERT_EQUAL(false, credentialExist("", "Ankit Kumar"));
+  TEST_ASSERT_EQUAL(false, credentialExist("Ankit Kumar", NULL));
+  TEST_ASSERT_EQUAL(false, credentialExist("Ankit Kumar", ""));
+
+  // creeating empty file
+  FILE *test_file = fopen(CREDENTIAL_FILE, "w");
+  fclose(test_file);
+
+  TEST_ASSERT_EQUAL(false, credentialExist("DontKnow", "Ankit Kumar"));
+
+  deleteAllCredentials();
+  TEST_ASSERT_EQUAL(false, credentialExist("DontKnow", "Ankit Kumar"));
 }

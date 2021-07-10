@@ -117,28 +117,28 @@ bool passwordFormatCheck(const char *password)
     }
 
     //Password Should contain special Characters
-    if (containSpecialCharacter(password) == false)
+    if (!containSpecialCharacter(password))
     {
         printf("-> %s\n", "Password dose not contain Special Characters. Add at least one Special character");
         IsFormatCorrect = false;
     }
 
     //password should contain lowercaseletter
-    if (containLowerCaseLetter(password) == false)
+    if (!containLowerCaseLetter(password))
     {
         printf("-> %s\n", "Password Does not contain Lower Case Letter. Add at least one Lower Case Letter");
         IsFormatCorrect = false;
     }
 
     //password should contain uppercase letter
-    if (containUpperCaseLetter(password) == false)
+    if (!containUpperCaseLetter(password))
     {
         printf("-> %s\n", "Password Does not contain Upper Case Letter. Add at least one Upper Case Letter");
         IsFormatCorrect = false;
     }
 
     //password should contain Number
-    if (containNumber(password) == false)
+    if (!containNumber(password))
     {
         printf("-> %s\n", "Password Does not contain Number. Add at least one numeric Character");
         IsFormatCorrect = false;

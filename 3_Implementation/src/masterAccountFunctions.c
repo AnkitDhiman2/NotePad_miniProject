@@ -20,16 +20,16 @@ typedef struct
 bool masterUserAccountExist()
 {
 
-    //1. Check if UserFile exist then master account Exist
-    if (access(UserFile, F_OK) == 0)
+    //1. Check if USER_FILE exist then master account Exist
+    if (access(USER_FILE, F_OK) == 0)
     {
         return true;
     }
 
-    // 2. if no UserFile exist then check if credential file exist , if yes delete it
-    if (access(CredentialFile, F_OK) == 0)
+    // 2. if no USER_FILE exist then check if credential file exist , if yes delete it
+    if (access(CREDENTIAL_FILE, F_OK) == 0)
     {
-        remove(CredentialFile);
+        remove(CREDENTIAL_FILE);
     }
 
     // 3. Master account do not exist
@@ -39,7 +39,7 @@ bool masterUserAccountExist()
 status createMasterUserAccount(const char *username, const char *password)
 {
     status return_value;   //
-    FILE *outfile;         // To write the UserFile.
+    FILE *outfile;         // To write the USER_FILE.
     SHA256_CTX sha256;     // For hashing
     masterAccount account; // For username and password hash
 
@@ -48,12 +48,12 @@ status createMasterUserAccount(const char *username, const char *password)
         return NULL_PTR;
     }
 
-    //1. Open UserFile to write master account data.
-    outfile = fopen(UserFile, "w");
+    //1. Open USER_FILE to write master account data.
+    outfile = fopen(USER_FILE, "w");
     if (outfile == NULL)
     {
-        fprintf(stderr, "\nError opend file\n");
-        exit(1);
+        printf("%s\n", "Failed to open USER_FILE");
+        return FAILURE;
     }
 
     // 2. Create hash of Username string and save it in account.username
@@ -70,7 +70,7 @@ status createMasterUserAccount(const char *username, const char *password)
 
     // EVP_Digest(password, strlen(password), account.password, NULL, EVP_sha256(), NULL);
 
-    // 4. Write struct masterAccount to UserFile
+    // 4. Write struct masterAccount to USER_FILE
     fwrite(&account, sizeof(masterAccount), 1, outfile);
     if (fwrite != 0)
     {
@@ -94,16 +94,16 @@ status deleteMasterUserAccount()
     //1. Check if master Account Exist if true delete it
     if (masterUserAccountExist())
     {
-        remove(UserFile);
+        remove(USER_FILE);
         return_value = SUCCESS;
     }
-    else // There was no UserFile to delete
+    else // There was no USER_FILE to delete
         return_value = FAILURE;
 
     // 2. check if credential file exist , if true delete it
-    if (access(CredentialFile, F_OK) == 0)
+    if (access(CREDENTIAL_FILE, F_OK) == 0)
     {
-        remove(CredentialFile);
+        remove(CREDENTIAL_FILE);
     }
 
     return return_value;
@@ -111,8 +111,8 @@ status deleteMasterUserAccount()
 
 bool verifyMasterUserAccount(const char *username, const char *password)
 {
-    masterAccount userInput, masterUser; // for user enterd credentials and credentials saved in UserFile
-    FILE *infile;                        // to read UserFile
+    masterAccount userInput, masterUser; // for user enterd credentials and credentials saved in USER_FILE
+    FILE *infile;                        // to read USER_FILE
     SHA256_CTX sha256;                   // For Hashing
 
     if (username == NULL || password == NULL || strlen(username) == 0 || strlen(password) == 0)
@@ -134,18 +134,18 @@ bool verifyMasterUserAccount(const char *username, const char *password)
 
     // EVP_Digest(password, strlen(password), userInput.password, NULL, EVP_sha256(), NULL);
 
-    //3. open UserFile
-    infile = fopen(UserFile, "r");
+    //3. open USER_FILE
+    infile = fopen(USER_FILE, "r");
     if (infile == NULL)
     {
-        fprintf(stderr, "\nError opening masterUser.dat file\n");
-        exit(1);
+        printf("%s\n", "Failed to open USER_FILE");
+        return FAILURE;
     }
 
-    //4. Read UserFile
+    //4. Read USER_FILE
     fread(&masterUser, sizeof(masterAccount), 1, infile);
 
-    //5. Compare hashes of UserFile Credentials and Credentials entered by User
+    //5. Compare hashes of USER_FILE Credentials and Credentials entered by User
     if (memcmp(&userInput, &masterUser, sizeof(masterUser)) == 0)
     {
         // If Credential match
@@ -171,7 +171,7 @@ status modifyMasterPassword(const char *new_password)
     }
 
     //1. open current Userfile
-    infile = fopen(UserFile, "r");
+    infile = fopen(USER_FILE, "r");
     if (infile == NULL)
     {
         fprintf(stderr, "\nError opening masterUser.dat file\n");
@@ -188,15 +188,15 @@ status modifyMasterPassword(const char *new_password)
     sha256_final(&sha256, account.password);
     // EVP_Digest(new_password, strlen(new_password), account.password, NULL, EVP_sha256(), NULL);
 
-    // 4. open UserFile again in write mode to write new password
-    outfile = fopen(UserFile, "w");
+    // 4. open USER_FILE again in write mode to write new password
+    outfile = fopen(USER_FILE, "w");
     if (outfile == NULL)
     {
         fprintf(stderr, "\nError opening masterUser.dat file\n");
         return FAILURE;
     }
 
-    // write to UserFile
+    // write to USER_FILE
     fwrite(&account, sizeof(masterAccount), 1, outfile);
     if (fwrite != 0)
     {
@@ -227,7 +227,7 @@ status modifyMasterUsername(const char *new_username)
     }
 
     //1. open current Userfile
-    infile = fopen(UserFile, "r");
+    infile = fopen(USER_FILE, "r");
     if (infile == NULL)
     {
         fprintf(stderr, "\nError opening masterUser.dat file\n");
@@ -246,15 +246,15 @@ status modifyMasterUsername(const char *new_username)
 
     // EVP_Digest(new_username, strlen(new_username), account.username, NULL, EVP_sha256(), NULL);
 
-    // 4. open UserFile again in write mode to write new password
-    outfile = fopen(UserFile, "w");
+    // 4. open USER_FILE again in write mode to write new password
+    outfile = fopen(USER_FILE, "w");
     if (outfile == NULL)
     {
         fprintf(stderr, "\nError opening masterUser.dat file\n");
         return FAILURE;
     }
 
-    // write to UserFile
+    // write to USER_FILE
     fwrite(&account, sizeof(masterAccount), 1, outfile);
     if (fwrite != 0)
     {

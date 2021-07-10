@@ -9,8 +9,6 @@
 
 /*************************** HEADER FILES ***************************/
 #include <stdio.h>
-#include <stdlib.h>
-#include <stdio_ext.h>
 #include <stdbool.h>
 #include <ctype.h>
 #include <string.h>

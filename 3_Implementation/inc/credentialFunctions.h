@@ -10,9 +10,13 @@
 
 /*************************** HEADER FILES ***************************/
 #include "common.h"
+#include <stdio.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <string.h>
 
 /****************************** MACROS ******************************/
-#define CredentialFile "credentialFile.dat"
+#define CREDENTIAL_FILE "credentialFile.dat"
 
 /**************************** DATA TYPES ****************************/
 typedef struct
@@ -35,10 +39,10 @@ typedef struct
 status addNewCredential(const char *organisationName, const char *username, const char *password);
 
 /**
-* @brief To Add new user credentials
+* @brief To delete credential
 * @param[in] string organisation_name
 * @param[in] string username
-* @return  SUCCESS if credentials are successfully deleted otherwise FAILURE
+* @return  SUCCESS if credential is successfully deleted otherwise FAILURE
 */
 status deleteCredential(const char organisationName, const char *username);
 
@@ -72,12 +76,26 @@ status modifyCredentialPassword(credential *cred, char *new_password);
 * @param[in] string username
 * @return  SUCCESS if credentials arr found otherwise FAILURE
 */
-credential *searchCredential(const char organisationName, const char *username);
+status searchCredential(const char *organisationName, const char *username);
 
 /**
 * @brief To print all saved credentials 
 * @return  Print all the credentials
 */
-void showAllCredentials();
+status showAllCredentials();
+
+/**
+* @brief To delte all credentials at once
+* @return  SUCCESS if all the credentials are successfully deleted otherwise FAILURE
+*/
+status deleteAllCredentials();
+
+/**
+* @brief To find if credential exist or not at once
+* @param[in] string organisation_name
+* @param[in] string username
+* @return  true if credential exist in CREDENTIAL_FILE otherwise false
+*/
+bool credentialExist(const char *organisationName, const char *username);
 
 #endif

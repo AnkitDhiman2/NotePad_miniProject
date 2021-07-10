@@ -10,19 +10,16 @@
 
 /*************************** HEADER FILES ***************************/
 #include <stdio.h>
-#include <stdlib.h>
-//#include <stdio_ext.h>
 #include <stdbool.h>
-#include <string.h>
-#include <sys/stat.h>
 #include <unistd.h>
+
 #include "common.h"
 #include "passwordUsernameFormatChecker.h"
 #include "credentialFunctions.h"
 #include "sha256.h"
 
 /****************************** MACROS ******************************/
-#define UserFile "MasterUserData.dat"
+#define USER_FILE "MasterUserData.dat"
 
 /*********************** FUNCTION DECLARATIONS **********************/
 

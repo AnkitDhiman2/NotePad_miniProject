@@ -8,11 +8,13 @@ BUILD = build
 SRC = project_main.c\
 src/passwordUsernameFormatChecker.c\
 src/masterAccountFunctions.c\
+src/credentialFunctions.c\
 src/sha256.c\
 
 # All test source files
 TEST_SRC = src/passwordUsernameFormatChecker.c\
 src/masterAccountFunctions.c\
+src/credentialFunctions.c\
 test/testTextPadFunctions.c\
 src/sha256.c\
 unity/unity.c\
