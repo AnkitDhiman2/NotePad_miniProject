@@ -62,10 +62,25 @@ System design is a solution for “HOW TO” approach to the creation of a new s
 
 ## Low level Requirements:
 
-| ID    | Description                                                  | Status      |
-| ----- | ------------------------------------------------------------ | ----------- |
-| LR_01 | Using function to check the format of username and password  | Implemented |
-| LR_02 | Using function to verify username and password               | Implemented |
-| LR_03 | Using functions to save and search user credential from file | Implemented |
-| LR_04 |                                                              | Implemented |
-| LR_05 |                                                              | Implemented |
+| ID    | Description                                            | Status      |
+| ----- | ------------------------------------------------------ | ----------- |
+| LR_01 | Function to check if String contain special characrers | Implemented |
+| LR_02 | Function to check if string contain numbers            | Implemented |
+| LR_03 | Function to check if string contain upper case letter  | Implemented |
+| LR_04 | Function to check if string contain lower case letter  | Implemented |
+| LR_05 | Function to check Format of password                   | Implemented |
+| LR_06 | Function to check Format of username                   | Implemented |
+| LR_07 | Function to create master user                         | Implemented |
+| LR_08 | Function to delete master user                         | Implemented |
+| LR_09 | Function to modify master account username             | Implemented |
+| LR_10 | Function to modify master account pasword              | Implemented |
+| LR_11 | Function to add new credential                         | Implemented |
+| LR_12 | Function to delete credential                          | In progress |
+| LR_13 | Function to serach credential                          | Implemented |
+| LR_14 | Function to modify credential username                 | Implemented |
+| LR_15 | Function to modify credential organisation             | Implemented |
+| LR_16 | Function to modify credential password                 | Implemented |
+| LR_17 | Function to show all credentials                       | Implemented |
+| LR_18 | Function to check if credential exist or not           | Implemented |
+| LR_19 | Function to check Format of password                   | Implemented |
+| LR_20 | Function to check Format of password                   | Implemented |

@@ -17,17 +17,16 @@ Visit [Pages for Report -optional](using github.io option)
 
 ## Contributors List and Summary
 
-| PS No. | Name     | Features         | Issuess Raised | Issues Resolved | No Test Cases | Test Case Pass |
-| ------ | -------- | ---------------- | -------------- | --------------- | ------------- | -------------- |
-| `ABC`  | 12345678 | Feature A, B etc | X No           | X No            | X No          | X No           |
-| `DEF`  | 12345678 | Feature C, D etc | X No           | X No            | X No          | X No           |
+| SF No.   | Name        | Features                 | Issuess Raised | Issues Resolved | No Test Cases | Test Case Pass |
+| -------- | ----------- | ------------------------ | -------------- | --------------- | ------------- | -------------- |
+| `304283` | Ankit Kumar | TextPad password maneger | Nil            | Nil             | 20            | 20             |
 
 ## Challenges Faced and How Was It Overcome
 
-1. ABC
-2. BCD
-3. ...
-4. ...
+1. It was my first experince with procedural language after a long time -> Learnig material helped a lot
+2. Whenever I needed to use GDB I had to create gdb file by mannualy typing the compile command -> solved by creating a debug command in makefile.
+3. Its was difficult to manage the overall project -> solved by finishing and testing one part at a time
+4. Including files -> later resolved
 
 ## Learning Resources
 
