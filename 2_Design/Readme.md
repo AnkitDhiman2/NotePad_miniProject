@@ -1,13 +1,13 @@
 # Design
 
-## High Level Design 
+## High Level Design
 
---- TBD Structural and Behavioural Diagram
 ![HighLevelStructuralDiagram](Link to Pic)
-![HighLevelBehaviouralDiagram](Link to Pic)
 
-## Low Level Design 
+![HighLevelBehaviouralDiagram](https://github.com/AnkitDhiman2/TextPad_miniProject/blob/main/2_Design/Behavior%20Diagrams/Use%20Case%20Diagram%20stepin.png)
 
---- TBD Structural and Behavioural Diagram
+## Low Level Design
+
 ![FeaturesLevelStructuralDiagram](Link to Pic)
-![FeaturesBehaviouralDiagram](Link to Pic)
+
+![FeaturesBehaviouralDiagram](https://github.com/AnkitDhiman2/TextPad_miniProject/blob/main/2_Design/Behavior%20Diagrams/Activity%20diagram%20stepin.png)

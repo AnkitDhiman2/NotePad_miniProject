@@ -1,6 +1,0 @@
-make --dry-run --always-make --keep-going --print-directory
-make: Entering directory '/home/ankit/Documents/c/TextPad_miniProject'
-make: Leaving directory '/home/ankit/Documents/c/TextPad_miniProject'
- 
-make: *** No targets specified and no makefile found.  Stop.
- 

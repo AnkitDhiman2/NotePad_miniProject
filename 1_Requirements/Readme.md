@@ -18,7 +18,7 @@ The system mainly involves two operation modes. They modifying master username o
 
 # SWOT Analysis
 
-[Here](link to image) is a brief analysis on Strengths, Weaknesses, Opportunities and Threats.
+[Here](https://github.com/AnkitDhiman2/TextPad_miniProject/blob/main/1_Requirements/TexPAd%20password%20maneger-1.png) is a brief analysis on Strengths, Weaknesses, Opportunities and Threats.
 
 # 4 W's and 1 H
 
