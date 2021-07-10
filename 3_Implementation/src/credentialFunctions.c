@@ -102,7 +102,6 @@ status searchCredential(const char *organisationName, const char *username, cred
     //********checking if there is any NULL or size 0 string in the arguments********
     if (organisationName == NULL ||
         username == NULL ||
-        out_credential == NULL ||
         strlen(organisationName) == 0 ||
         strlen(username) == 0)
         return NULL_PTR;

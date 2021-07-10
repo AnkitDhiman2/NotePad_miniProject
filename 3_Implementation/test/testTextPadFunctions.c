@@ -276,7 +276,6 @@ void test_searchCredential(void)
   TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("", "Ankit Kumar", &temp_credential));
   TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("Ankit Kumar", NULL, &temp_credential));
   TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("Ankit Kumar", "", &temp_credential));
-  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("Ankit Kumar", "", NULL));
 
   // creeating empty file
   FILE *test_file = fopen(CREDENTIAL_FILE, "w");
