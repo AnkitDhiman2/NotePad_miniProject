@@ -48,16 +48,16 @@ System design is a solution for “HOW TO” approach to the creation of a new s
 
 | ID    | Description                                                                            | Status      |
 | ----- | -------------------------------------------------------------------------------------- | ----------- |
-| HR_01 | System shall be able to run on Windows 10/Linux                                        | Done        |
-| HR_02 | System shall be able to on minimum RAM(512MB)                                          | Done        |
-| HR_03 | System shall use encryption techniques                                                 | Done        |
-| HR_04 | User shall use single master account to access all his credentials                     | Done        |
-| HR_05 | User shall be able to create master account with specific username and password format | Done        |
-| HR_06 | User shall be able to modify master account credentials                                | Done        |
-| HR_07 | User shall be able to delete master account                                            | Done        |
-| HR_08 | User shall be able to save user credential and information about those credentials     | In progress |
-| HR_09 | user shall be able to search user credentials                                          | In progress |
-| HR_10 | User shall be able to modify user credentials                                          | In progress |
+| HR_01 | System shall be able to run on Windows 10/Linux                                        | Implemented |
+| HR_02 | System shall be able to on minimum RAM(512MB)                                          | Implemented |
+| HR_03 | System shall use encryption techniques                                                 | Implemented |
+| HR_04 | User shall use single master account to access all his credentials                     | Implemented |
+| HR_05 | User shall be able to create master account with specific username and password format | Implemented |
+| HR_06 | User shall be able to modify master account credentials                                | Implemented |
+| HR_07 | User shall be able to delete master account                                            | Implemented |
+| HR_08 | User shall be able to save user credential and information about those credentials     | Implemented |
+| HR_09 | user shall be able to search user credentials                                          | Implemented |
+| HR_10 | User shall be able to modify user credentials                                          | Implemented |
 | HR_11 | User shall be able to delete user crefentials                                          | In progress |
 
 ## Low level Requirements:
