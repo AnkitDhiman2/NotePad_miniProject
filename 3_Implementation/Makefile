@@ -31,9 +31,9 @@ INC	= -Iinc\
 #INCLUDE_LIBS =
 
 # Project Output name
-PROJECT_OUTPUT = $(BUILD)/$(PROJECT_NAME).out
+PROJECT_OUTPUT = $(BUILD)/$(PROJECT_NAME)
 
-DEBUG_OUTPUT = $(BUILD)/Debug_$(PROJECT_NAME).out
+DEBUG_OUTPUT = $(BUILD)/Debug_$(PROJECT_NAME)
 
 # Document files
 DOCUMENTATION_OUTPUT = documentation/html
@@ -47,6 +47,9 @@ $(PROJECT_NAME):all
 all: $(SRC) $(BUILD)
 	gcc $(SRC) $(INC) $(INCLUDE_LIBS) -o $(PROJECT_OUTPUT).out
 
+windows:
+	gcc $(SRC) $(INC) $(INCLUDE_LIBS) -o $(PROJECT_OUTPUT).exe
+
 
 debug: $(SRC) $(BUILD)
 	gcc -g $(SRC) $(INC) $(INCLUDE_LIBS) -o $(DEBUG_OUTPUT).out
@@ -54,6 +57,9 @@ debug: $(SRC) $(BUILD)
 # Call `make run` to run the application
 run:$(PROJECT_NAME)
 	./$(PROJECT_OUTPUT).out
+
+run_windows:$(PROJECT_NAME)
+	./$(PROJECT_OUTPUT).exe
 
 # Document the code using Doxygen
 #doc:

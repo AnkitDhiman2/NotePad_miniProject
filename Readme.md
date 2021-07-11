@@ -28,6 +28,31 @@ Visit [Pages for Report -optional](using github.io option)
 3. Its was difficult to manage the overall project -> solved by finishing and testing one part at a time
 4. Including files -> later resolved
 
+## How to Run
+
+### - On Linux
+
+1. Type folowing commands in terminal :-
+
+   - sudo apt update
+
+   - sudo apt install build-essentials
+
+2. Open the terminal in Implementation folder.
+3. Run the following command :-
+
+   - make
+   - make run
+
+### - On Windows
+
+1. Follow [this](https://code.visualstudio.com/docs/languages/cpp) tutorial to install gcc compiler to your windows machine.
+
+2. Open the project Implementation directory inside command prompt.
+3. Run the following commands inside command prompt
+   - make windows
+   - make run_windows
+
 ## Learning Resources
 
 1. [markdownCheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)

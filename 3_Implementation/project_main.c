@@ -8,7 +8,7 @@
 #include <stdlib.h>
 /****************************** MACROS ******************************/
 #ifdef _WIN32
-#define CLEAR "clr"
+#define CLEAR "cls"
 #else
 #define CLEAR "clear"
 #endif
