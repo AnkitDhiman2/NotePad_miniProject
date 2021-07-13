@@ -18,11 +18,15 @@ status addNewCredential(const char *organisationName, const char *username, cons
     //check for NULL pointer
     if (organisationName == NULL ||
         username == NULL ||
-        password == NULL ||
-        strlen(organisationName) == 0 ||
+        password == NULL)
+        return NULL_PTR;
+
+    if (strlen(organisationName) == 0 ||
         strlen(username) == 0 ||
         strlen(password) == 0)
-        return NULL_PTR;
+    {
+        return EMPTY_STRING;
+    }
 
     // Check if credential file exist or not if not create it
     if (access(CREDENTIAL_FILE, F_OK) != 0)
@@ -101,10 +105,16 @@ status searchCredential(const char *organisationName, const char *username, cred
 
     //********checking if there is any NULL or size 0 string in the arguments********
     if (organisationName == NULL ||
-        username == NULL ||
-        strlen(organisationName) == 0 ||
-        strlen(username) == 0)
+        username == NULL)
+    {
         return NULL_PTR;
+    }
+
+    if (strlen(organisationName) == 0 ||
+        strlen(username) == 0)
+    {
+        return EMPTY_STRING;
+    }
 
     //*********open the credential file in read mode***********
     credential_file = fopen(CREDENTIAL_FILE, "r");
@@ -139,12 +149,15 @@ bool credentialExist(const char *organisationName, const char *username)
 
     //********checking if there is any NULL or size 0 string in the arguments********
     if (organisationName == NULL ||
-        username == NULL ||
-        strlen(organisationName) == 0 ||
-        strlen(username) == 0)
+        username == NULL)
     {
         printf("%s\n", "credential exist- Null pointer");
         return false;
+    }
+
+    if (strlen(organisationName) == 0 || strlen(username) == 0)
+    {
+        return EMPTY_STRING;
     }
 
     //*********open the credential file in read mode***********
@@ -177,12 +190,22 @@ status modifyCredentialOrganisation(char *organisation, char *username, char *ne
 
     if (organisation == NULL ||
         username == NULL ||
-        new_Organisation_name == NULL ||
-        strlen(organisation) == 0 ||
+        new_Organisation_name == NULL)
+    {
+        return NULL_PTR;
+    }
+
+    if (strlen(organisation) == 0 ||
         strlen(username) == 0 ||
         strlen(new_Organisation_name) == 0)
     {
-        return NULL_PTR;
+        return EMPTY_STRING;
+    }
+
+    if (credentialExist(organisation, username) == false)
+    {
+        printf("%s\n", "Organisation & Username combination does not exist");
+        return FAILURE;
     }
 
     credential_file = fopen(CREDENTIAL_FILE, "r+");
@@ -219,12 +242,22 @@ status modifyCredentialUsername(char *organisation, char *username, char *new_us
 
     if (organisation == NULL ||
         username == NULL ||
-        new_username == NULL ||
-        strlen(organisation) == 0 ||
+        new_username == NULL)
+    {
+        return NULL_PTR;
+    }
+
+    if (strlen(organisation) == 0 ||
         strlen(username) == 0 ||
         strlen(new_username) == 0)
     {
-        return NULL_PTR;
+        return EMPTY_STRING;
+    }
+
+    if (credentialExist(organisation, username) == false)
+    {
+        printf("%s\n", "Organisation & Username combination does not exist");
+        return FAILURE;
     }
 
     credential_file = fopen(CREDENTIAL_FILE, "r+");
@@ -261,12 +294,22 @@ status modifyCredentialPassword(char *organisation, char *username, char *new_pa
 
     if (organisation == NULL ||
         username == NULL ||
-        new_password == NULL ||
-        strlen(organisation) == 0 ||
+        new_password == NULL)
+    {
+        return NULL_PTR;
+    }
+
+    if (strlen(organisation) == 0 ||
         strlen(username) == 0 ||
         strlen(new_password) == 0)
     {
-        return NULL_PTR;
+        return EMPTY_STRING;
+    }
+
+    if (credentialExist(organisation, username) == false)
+    {
+        printf("%s\n", "Organisation & Username combination does not exist");
+        return FAILURE;
     }
 
     credential_file = fopen(CREDENTIAL_FILE, "r+");
