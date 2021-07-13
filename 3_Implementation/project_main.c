@@ -13,12 +13,14 @@
 #define CLEAR "clear"
 #endif
 
-//#define TEST
-
 #define BUFFER_SIZE (100) /*Common Buffer size for input*/
 
-#ifndef TEST
+/***************************** function decration*********************/
+
+void clean_stdin(void); // To clear the input buffer , implementaion is after main function
+
 /*********************** MAIN FUNCTION DEFINITIONS ***********************/
+
 int main()
 {
     printf("%s\n", "*********************************************** TextPad Password Maneger ***********************************************");
@@ -33,39 +35,33 @@ int main()
                 char input;
 
                 printf("%s\n", "Enter Master Username");
-                fflush(stdin);
                 fgets(username, BUFFER_SIZE, stdin);
-                fflush(stdin);
 
                 printf("%s\n", "Enter Master password");
-                fflush(stdin);
                 fgets(password, BUFFER_SIZE, stdin);
 
                 if (verifyMasterUserAccount(username, password))
                 {
                     break;
                 }
+
                 system(CLEAR);
                 printf("%s\n", "Master Username or Master  Password is incorrect.");
                 printf("%s\n", ">Enter 1 to try again\n>Enter 0 to exit");
 
-                fflush(stdin);
-                scanf(" %c", &input);
-                switch (input)
+                input = getchar();
+
+                if (input == '0')
                 {
-                case '0':
-                    printf("%s\n", "Exiting the program");
                     return 0;
-                    break;
-                default:
-                    continue;
-                    break;
                 }
+                clean_stdin();
             }
             while (true)
             {
                 /* code */
 
+                system(CLEAR);
                 printf("%s\n", "Enter the index for operation to perform");
                 printf("%s\n", "Enter 1 to change Master Username");
                 printf("%s\n", "Enter 2 to change Master Password");
@@ -74,7 +70,7 @@ int main()
                 printf("%s\n", "Enter 5 to Show All Credentials");
                 printf("%s\n", "Enter 6 to EXIT");
                 char input;
-                fflush(stdin);
+
                 scanf(" %c", &input);
                 switch (input)
                 {
@@ -85,8 +81,9 @@ int main()
                         system(CLEAR);
                         char new_username[BUFFER_SIZE];
                         char inside_input;
+
+                        clean_stdin();
                         printf("%s\n", "Enter New Master Username");
-                        fflush(stdin);
                         fgets(new_username, BUFFER_SIZE, stdin);
 
                         if (usernameFormatCheck(new_username))
@@ -98,17 +95,11 @@ int main()
 
                         printf("%s\n", ">Enter 1 to try again\n>Enter 0 to exit");
 
-                        fflush(stdin);
-                        scanf(" %c", &input);
-                        switch (inside_input)
+                        inside_input = getchar();
+                        if (inside_input == '0')
                         {
-                        case '0':
-                            printf("%s\n", "Exiting the program");
+                            printf("%s", "Exiting the program");
                             return 0;
-                            break;
-                        default:
-                            continue;
-                            break;
                         }
                     }
                     break;
@@ -121,8 +112,9 @@ int main()
                         system(CLEAR);
                         char new_password[BUFFER_SIZE];
                         char inside_input;
+
+                        clean_stdin();
                         printf("%s\n", "Enter New Master Password");
-                        fflush(stdin);
                         fgets(new_password, BUFFER_SIZE, stdin);
 
                         if (passwordFormatCheck(new_password))
@@ -134,16 +126,11 @@ int main()
 
                         printf("%s\n", ">Enter 1 to try again\n>Enter 0 to exit");
 
-                        fflush(stdin);
-                        scanf(" %c", &inside_input);
-                        switch (inside_input)
+                        inside_input = getchar();
+                        if (inside_input == '0')
                         {
-                        case '0':
-                            printf("%s\n", "Exiting the program");
+                            printf("%s", "Exiting the program");
                             return 0;
-                            break;
-                        default:
-                            break;
                         }
                     }
                     break;
@@ -156,18 +143,13 @@ int main()
                     char new_password[BUFFER_SIZE];
 
                     printf("%s\n", "Enter Organisation Name");
-
-                    fflush(stdin);
-                    fgets(new_organisation, BUFFER_SIZE, stdin);
-                    fflush(stdin);
+                    clean_stdin();
                     fgets(new_organisation, BUFFER_SIZE, stdin);
 
                     printf("%s\n", "Enter Username");
-                    fflush(stdin);
                     fgets(new_username, BUFFER_SIZE, stdin);
 
                     printf("%s\n", "Enter Password");
-                    fflush(stdin);
                     fgets(new_password, BUFFER_SIZE, stdin);
 
                     addNewCredential(new_organisation, new_username, new_password);
@@ -180,15 +162,11 @@ int main()
                     char username[BUFFER_SIZE];
                     credential temp_credential;
 
+                    clean_stdin();
                     printf("%s\n", "Enter Organisation Name to search");
-
-                    fflush(stdin);
-                    fgets(organisation, BUFFER_SIZE, stdin);
-                    fflush(stdin);
                     fgets(organisation, BUFFER_SIZE, stdin);
 
                     printf("%s\n", "Enter Username to search");
-                    fflush(stdin);
                     fgets(username, BUFFER_SIZE, stdin);
 
                     if (searchCredential(organisation, username, &temp_credential) == FAILURE)
@@ -211,48 +189,61 @@ int main()
                         printf("%s\n", "Press 3 to change the Password");
                         printf("%s\n", "Press 0 to exit");
 
-                        fflush(stdin);
-                        scanf(" %c", &inside_input);
-                        switch (inside_input)
+                        inside_input = getchar();
+
+                        if (inside_input == '0')
                         {
-                        case '0':
-                            printf("%s\n", "Exiting the program");
-                            return 0;
+                            system(CLEAR);
+                            printf("%s\n", "Exiting to main menu");
                             break;
-                        case '1':
+                        }
+                        else if (inside_input == '1')
                         {
                             char new_organisation[BUFFER_SIZE];
+
+                            clean_stdin();
                             printf("%s\n", "Enter new organisaion name");
-                            fflush(stdin);
-                            fgets(new_organisation, BUFFER_SIZE, stdin);
                             fgets(new_organisation, BUFFER_SIZE, stdin);
 
                             modifyCredentialOrganisation(temp_credential.organisationName, temp_credential.username, new_organisation);
-                            break;
+                            strcpy(temp_credential.organisationName, new_organisation);
+
+                            system(CLEAR);
+                            printf("%s\n", "***Organisation name changed Successfully");
                         }
 
-                        case '2':
+                        else if (inside_input == '2')
                         {
                             char new_username[BUFFER_SIZE];
+
+                            clean_stdin();
                             printf("%s\n", "Enter new username");
-                            fflush(stdin);
                             fgets(new_username, BUFFER_SIZE, stdin);
 
                             modifyCredentialUsername(temp_credential.organisationName, temp_credential.username, new_username);
-                            break;
+                            strcpy(temp_credential.username, new_username);
+
+                            system(CLEAR);
+                            printf("%s\n", "**Username changed Succcessfully");
                         }
 
-                        case '3':
+                        else if (inside_input == '3')
                         {
                             char new_password[BUFFER_SIZE];
+
+                            clean_stdin();
                             printf("%s\n", "Enter new organisaion name");
-                            fflush(stdin);
                             fgets(new_password, BUFFER_SIZE, stdin);
+
                             modifyCredentialPassword(temp_credential.organisationName, temp_credential.username, new_password);
-                            break;
+                            strcpy(temp_credential.password, new_password);
+
+                            system(CLEAR);
+                            printf("%s\n", "**Password Chnaged Successfully");
                         }
 
-                        default:
+                        else
+                        {
                             printf("%s\n", "Invalid Option Please try again");
                             break;
                         }
@@ -266,6 +257,8 @@ int main()
 
                     break;
                 case '6':
+
+                    printf("%s\n", "Exiting the program");
                     return 0;
                     break;
 
@@ -286,7 +279,7 @@ int main()
             {
                 printf("%s\n", "Please Enter New Username");
                 //fgets(username, BUFFER_SIZE, stdin);
-                fflush(stdin);
+
                 fgets(username, BUFFER_SIZE, stdin);
 
                 usernameFormatCheck(username);
@@ -304,7 +297,6 @@ int main()
                 printf("%s\n", "Please Enter New password");
                 //fgets(password, BUFFER_SIZE, stdin);
 
-                fflush(stdin);
                 fgets(password, BUFFER_SIZE, stdin);
 
                 system(CLEAR);
@@ -322,25 +314,11 @@ int main()
     }
 }
 
-#else
-int main()
+void clean_stdin(void)
 {
-    credential temp_credential;
-    addNewCredential("facebook", "Ankit", "ankit123");
-    addNewCredential("twitter", "Ankit", "ankit123");
-    addNewCredential("facebook1", "Ankit", "ankit123");
-    addNewCredential("twitter2", "Ankit", "ankit123");
-    addNewCredential("facebook3", "Ankit", "ankit123");
-    addNewCredential("twitter4", "Ankit", "ankit123");
-    addNewCredential("facebook5", "Ankit", "ankit123");
-    addNewCredential("twitter6", "Ankit", "ankit123");
-    addNewCredential("Random Organisation", "Ankit Kumar", "@nkit123");
-
-    searchCredential("twitter", "Ankit", &temp_credential);
-    printf("%s\n", temp_credential.organisationName);
-    printf("%s\n", temp_credential.username);
-    printf("%s\n", temp_credential.password);
-
-    deleteAllCredentials();
+    int c;
+    do
+    {
+        c = getchar();
+    } while (c != '\n' && c != EOF);
 }
-#endif

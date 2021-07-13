@@ -43,9 +43,14 @@ status createMasterUserAccount(const char *username, const char *password)
     SHA256_CTX sha256;     // For hashing
     masterAccount account; // For username and password hash
 
-    if (username == NULL || password == NULL || strlen(username) == 0 || strlen(password) == 0)
+    if (username == NULL || password == NULL)
     {
         return NULL_PTR;
+    }
+
+    if (strlen(username) == 0 || strlen(password) == 0)
+    {
+        return EMPTY_STRING;
     }
 
     //1. Open USER_FILE to write master account data.
@@ -115,9 +120,14 @@ bool verifyMasterUserAccount(const char *username, const char *password)
     FILE *infile;                        // to read USER_FILE
     SHA256_CTX sha256;                   // For Hashing
 
-    if (username == NULL || password == NULL || strlen(username) == 0 || strlen(password) == 0)
+    if (username == NULL || password == NULL)
     {
         return false;
+    }
+
+    if (strlen(username) == 0 || strlen(password) == 0)
+    {
+        return EMPTY_STRING;
     }
 
     //1. create hash of username entered by user
@@ -165,9 +175,14 @@ status modifyMasterPassword(const char *new_password)
     FILE *infile, *outfile;
     SHA256_CTX sha256;
 
-    if (new_password == NULL || strlen(new_password) == 0)
+    if (new_password == NULL)
     {
         return NULL_PTR;
+    }
+
+    if (strlen(new_password) == 0)
+    {
+        return EMPTY_STRING;
     }
 
     //1. open current Userfile
@@ -221,9 +236,14 @@ status modifyMasterUsername(const char *new_username)
     FILE *infile, *outfile;
     SHA256_CTX sha256;
 
-    if (new_username == NULL || strlen(new_username) == 0)
+    if (new_username == NULL)
     {
         return NULL_PTR;
+    }
+
+    if (strlen(new_username) == 0)
+    {
+        return EMPTY_STRING;
     }
 
     //1. open current Userfile

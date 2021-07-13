@@ -12,7 +12,8 @@ typedef enum
 {
     SUCCESS,
     FAILURE,
-    NULL_PTR
+    NULL_PTR,
+    EMPTY_STRING
 
 } status;
 
