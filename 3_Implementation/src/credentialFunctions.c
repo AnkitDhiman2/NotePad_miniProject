@@ -157,7 +157,7 @@ bool credentialExist(const char *organisationName, const char *username)
 
     if (strlen(organisationName) == 0 || strlen(username) == 0)
     {
-        return EMPTY_STRING;
+        return false;
     }
 
     //*********open the credential file in read mode***********

@@ -228,7 +228,7 @@ void test_addNewCredential(void)
   TEST_ASSERT_EQUAL(SUCCESS, addNewCredential("twitter", "Ankit", "ankit123"));
   TEST_ASSERT_EQUAL(FAILURE, addNewCredential("facebook", "Ankit", "ankit123"));
   TEST_ASSERT_EQUAL(NULL_PTR, addNewCredential(NULL, "Ankit", "ankit123"));
-  TEST_ASSERT_EQUAL(NULL_PTR, addNewCredential(NULL, "", "ankit123"));
+  TEST_ASSERT_EQUAL(EMPTY_STRING, addNewCredential("", "", "ankit123"));
   TEST_ASSERT_EQUAL(NULL_PTR, addNewCredential("as", "Ankit", NULL));
 
   deleteAllCredentials();
@@ -273,9 +273,9 @@ void test_searchCredential(void)
   TEST_ASSERT_EQUAL(FAILURE, searchCredential("DontKnow", "Ankit Kumar", &temp_credential));
 
   TEST_ASSERT_EQUAL(NULL_PTR, searchCredential(NULL, "Ankit Kumar", &temp_credential));
-  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("", "Ankit Kumar", &temp_credential));
+  TEST_ASSERT_EQUAL(EMPTY_STRING, searchCredential("", "Ankit Kumar", &temp_credential));
   TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("Ankit Kumar", NULL, &temp_credential));
-  TEST_ASSERT_EQUAL(NULL_PTR, searchCredential("Ankit Kumar", "", &temp_credential));
+  TEST_ASSERT_EQUAL(EMPTY_STRING, searchCredential("Ankit Kumar", "", &temp_credential));
 
   // creeating empty file
   FILE *test_file = fopen(CREDENTIAL_FILE, "w");
